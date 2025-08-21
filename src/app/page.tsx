@@ -209,27 +209,27 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Brands />
+      {/* <Brands /> */}
       <main className="my-[50px] sm:my-[72px]">
         <ProductListSec
-          title="NEW ARRIVALS"
+          title="NOVIDADES"
           data={newArrivalsData}
-          viewAllLink="/shop#new-arrivals"
+          viewAllLink="/shop#novidades"
         />
         <div className="max-w-frame mx-auto px-4 xl:px-0">
           <hr className="h-[1px] border-t-black/10 my-10 sm:my-16" />
         </div>
         <div className="mb-[50px] sm:mb-20">
           <ProductListSec
-            title="top selling"
+            title="Mais Vendidos"
             data={topSellingData}
-            viewAllLink="/shop#top-selling"
+            viewAllLink="/shop#maisvendidos"
           />
         </div>
-        <div className="mb-[50px] sm:mb-20">
+        {/* <div className="mb-[50px] sm:mb-20">
           <DressStyle />
-        </div>
-        <Reviews data={reviewsData} />
+        </div> */}
+        {/* <Reviews data={reviewsData} /> */}
       </main>
     </>
   );

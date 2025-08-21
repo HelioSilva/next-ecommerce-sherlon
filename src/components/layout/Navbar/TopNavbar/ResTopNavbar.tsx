@@ -18,6 +18,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { nameStore } from "@/const/name";
 
 const ResTopNavbar = ({ data }: { data: NavMenu }) => {
   return (
@@ -37,7 +38,7 @@ const ResTopNavbar = ({ data }: { data: NavMenu }) => {
           <SheetTitle asChild>
             <SheetClose asChild>
               <Link href="/" className={cn([integralCF.className, "text-2xl"])}>
-                SHOP.CO
+                {nameStore}
               </Link>
             </SheetClose>
           </SheetTitle>

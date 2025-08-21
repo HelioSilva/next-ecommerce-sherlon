@@ -13,60 +13,86 @@ import Image from "next/image";
 import InputGroup from "@/components/ui/input-group";
 import ResTopNavbar from "./ResTopNavbar";
 import CartBtn from "./CartBtn";
+import { nameStore } from "@/const/name";
 
 const data: NavMenu = [
   {
     id: 1,
-    label: "Shop",
+    label: "Loja",
     type: "MenuList",
     children: [
       {
+        id: 10,
+        label: "Acessórios",
+        url: "/shop#acessorios",
+        description:
+          "Complete seu visual com acessórios exclusivos que destacam sua personalidade e estilo.",
+      },
+      {
         id: 11,
-        label: "Men's clothes",
-        url: "/shop#men-clothes",
-        description: "In attractive and spectacular colors and designs",
+        label: "Anéis",
+        url: "/shop#aneis",
+        description:
+          "Descubra anéis sofisticados para eternizar momentos especiais e valorizar cada detalhe.",
       },
       {
         id: 12,
-        label: "Women's clothes",
-        url: "/shop#women-clothes",
-        description: "Ladies, your style and tastes are important to us",
+        label: "Berloques",
+        url: "/shop#berloques",
+        description:
+          "Personalize sua pulseira com berloques únicos que contam a sua história.",
       },
       {
         id: 13,
-        label: "Kids clothes",
-        url: "/shop#kids-clothes",
-        description: "For all ages, with happy and beautiful colors",
+        label: "Braceletes",
+        url: "/shop#braceletes",
+        description:
+          "Braceletes modernos e elegantes para complementar qualquer ocasião.",
       },
       {
         id: 14,
-        label: "Bags and Shoes",
-        url: "/shop#bag-shoes",
-        description: "Suitable for men, women and all tastes and styles",
+        label: "Brincos",
+        url: "/shop#brincos",
+        description:
+          "Brincos delicados e marcantes para realçar sua beleza todos os dias.",
+      },
+      {
+        id: 15,
+        label: "Conjuntos",
+        url: "/shop#conjuntos",
+        description:
+          "Conjuntos harmoniosos para presentear ou renovar seu porta-joias com muito charme.",
+      },
+      {
+        id: 16,
+        label: "Correntes",
+        url: "/shop#correntes",
+        description:
+          "Correntes versáteis e estilosas para compor looks autênticos e sofisticados.",
       },
     ],
   },
-  {
-    id: 2,
-    type: "MenuItem",
-    label: "On Sale",
-    url: "/shop#on-sale",
-    children: [],
-  },
+  // {
+  //   id: 2,
+  //   type: "MenuItem",
+  //   label: "On Sale",
+  //   url: "/shop#on-sale",
+  //   children: [],
+  // },
   {
     id: 3,
     type: "MenuItem",
-    label: "New Arrivals",
-    url: "/shop#new-arrivals",
+    label: "Novidades",
+    url: "/shop#novidades",
     children: [],
   },
-  {
-    id: 4,
-    type: "MenuItem",
-    label: "Brands",
-    url: "/shop#brands",
-    children: [],
-  },
+  // {
+  //   id: 4,
+  //   type: "MenuItem",
+  //   label: "Brands",
+  //   url: "/shop#brands",
+  //   children: [],
+  // },
 ];
 
 const TopNavbar = () => {
@@ -77,14 +103,15 @@ const TopNavbar = () => {
           <div className="block md:hidden mr-4">
             <ResTopNavbar data={data} />
           </div>
+          <p className="mr-3">Image-Logo</p>
           <Link
             href="/"
             className={cn([
               integralCF.className,
-              "text-2xl lg:text-[32px] mb-2 mr-3 lg:mr-10",
+              "text-2xl lg:text-[32px] mb-2 mr-3 lg:mr-20",
             ])}
           >
-            SHOP.CO
+            {nameStore}
           </Link>
         </div>
         <NavigationMenu className="hidden md:flex mr-2 lg:mr-7">
@@ -115,7 +142,7 @@ const TopNavbar = () => {
           <InputGroup.Input
             type="search"
             name="search"
-            placeholder="Search for products..."
+            placeholder="Buscar produtos..."
             className="bg-transparent placeholder:text-black/40"
           />
         </InputGroup>

@@ -6,104 +6,74 @@ import { cn } from "@/lib/utils";
 const footerLinksData: FooterLinks[] = [
   {
     id: 1,
-    title: "company",
+    title: "Empresa",
     children: [
       {
         id: 11,
-        label: "about",
+        label: "Sobre nós",
         url: "#",
       },
       {
         id: 12,
-        label: "features",
+        label: "Contatos",
         url: "#",
       },
       {
         id: 13,
-        label: "works",
-        url: "#",
-      },
-      {
-        id: 14,
-        label: "career",
+        label: "Horário de funcionamento",
         url: "#",
       },
     ],
   },
   {
     id: 2,
-    title: "help",
+    title: "Ajuda",
     children: [
       {
-        id: 21,
-        label: "customer support",
-        url: "#",
-      },
-      {
-        id: 22,
-        label: "delivery details",
-        url: "#",
-      },
-      {
-        id: 23,
-        label: "terms & conditions",
+        id: 13,
+        label: "Política de Frete",
         url: "#",
       },
       {
         id: 24,
-        label: "privacy policy",
+        label: "Política de privacidade",
         url: "#",
       },
     ],
   },
   {
     id: 3,
-    title: "faq",
+    title: "Perguntas frequentes",
     children: [
       {
         id: 31,
-        label: "account",
+        label: "Pedidos",
         url: "#",
       },
       {
         id: 32,
-        label: "manage deliveries",
+        label: "Entrega",
         url: "#",
       },
       {
         id: 33,
-        label: "orders",
-        url: "#",
-      },
-      {
-        id: 34,
-        label: "payments",
+        label: "Pagamento",
         url: "#",
       },
     ],
   },
   {
     id: 4,
-    title: "resources",
+    title: "Mais",
     children: [
       {
         id: 41,
-        label: "Free eBooks",
+        label: "Nosso blog",
         url: "#",
       },
       {
         id: 42,
-        label: "development tutorial",
-        url: "#",
-      },
-      {
-        id: 43,
-        label: "How to - Blog",
-        url: "#",
-      },
-      {
-        id: 44,
-        label: "youtube playlist",
+        label: "Galeria de fotos",
         url: "#",
       },
     ],

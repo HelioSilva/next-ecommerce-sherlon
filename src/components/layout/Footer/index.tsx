@@ -8,6 +8,7 @@ import LinksSection from "./LinksSection";
 import Image from "next/image";
 import NewsLetterSection from "./NewsLetterSection";
 import LayoutSpacing from "./LayoutSpacing";
+import { nameStore } from "@/const/name";
 
 const socialsData: SocialNetworks[] = [
   {
@@ -24,11 +25,6 @@ const socialsData: SocialNetworks[] = [
     id: 3,
     icon: <FaInstagram />,
     url: "https://instagram.com",
-  },
-  {
-    id: 4,
-    icon: <FaGithub />,
-    url: "https://github.com/mohammadoftadeh",
   },
 ];
 
@@ -58,12 +54,12 @@ const paymentBadgesData: PaymentBadge[] = [
 const Footer = () => {
   return (
     <footer className="mt-10">
-      <div className="relative">
+      {/* <div className="relative">
         <div className="absolute bottom-0 w-full h-1/2 bg-[#F0F0F0]"></div>
         <div className="px-4">
           <NewsLetterSection />
         </div>
-      </div>
+      </div> */}
       <div className="pt-8 md:pt-[50px] bg-[#F0F0F0] px-4 pb-4">
         <div className="max-w-frame mx-auto">
           <nav className="lg:grid lg:grid-cols-12 mb-8">
@@ -74,11 +70,11 @@ const Footer = () => {
                   "text-[28px] lg:text-[32px] mb-6",
                 ])}
               >
-                SHOP.CO
+                {nameStore}
               </h1>
               <p className="text-black/60 text-sm mb-9">
-                We have clothes that suits your style and which you’re proud to
-                wear. From women to men.
+                Descrição da loja. Poucas palavras que resumem a essência da
+                marca.
               </p>
               <div className="flex items-center">
                 {socialsData.map((social) => (
@@ -103,12 +99,12 @@ const Footer = () => {
           <hr className="h-[1px] border-t-black/10 mb-6" />
           <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center mb-2">
             <p className="text-sm text-center sm:text-left text-black/60 mb-4 sm:mb-0 sm:mr-1">
-              Shop.co © Made by{" "}
+              {nameStore} © Feito por{" "}
               <Link
                 href="https://github.com/mohammadoftadeh"
                 className="text-black font-medium"
               >
-                Mohammad Oftadeh
+                Computek
               </Link>
               {", "}
               Designed by{" "}
@@ -116,7 +112,7 @@ const Footer = () => {
                 href="https://www.figma.com/@hamzauix"
                 className="text-black font-medium"
               >
-                Hamza Naeem
+                Computek
               </Link>
             </p>
             <div className="flex items-center">
