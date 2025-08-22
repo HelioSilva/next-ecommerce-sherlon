@@ -1,3 +1,5 @@
+"use client";
+
 import BreadcrumbShop from "@/components/shop-page/BreadcrumbShop";
 
 import {
@@ -10,7 +12,6 @@ import {
 import MobileFilters from "@/components/shop-page/filters/MobileFilters";
 import Filters from "@/components/shop-page/filters";
 import { FiSliders } from "react-icons/fi";
-import { newArrivalsData, relatedProductData, topSellingData } from "../page";
 import ProductCard from "@/components/common/ProductCard";
 import {
   Pagination,
@@ -21,8 +22,10 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useProdutos } from "@/lib/hooks/useProducts";
 
 export default function ShopPage() {
+  const { produtos, isLoading, error } = useProdutos();
   return (
     <main className="pb-20">
       <div className="max-w-frame mx-auto px-4 xl:px-0">
@@ -39,34 +42,30 @@ export default function ShopPage() {
           <div className="flex flex-col w-full space-y-5">
             <div className="flex flex-col lg:flex-row lg:justify-between">
               <div className="flex items-center justify-between">
-                <h1 className="font-bold text-2xl md:text-[32px]">Casual</h1>
+                <h1 className="font-bold text-2xl md:text-[32px]">Categoria</h1>
                 <MobileFilters />
               </div>
               <div className="flex flex-col sm:items-center sm:flex-row">
                 <span className="text-sm md:text-base text-black/60 mr-3">
-                  Showing 1-10 of 100 Products
+                  Mostrando 1-10 de 100 produtos
                 </span>
                 <div className="flex items-center">
-                  Sort by:{" "}
+                  Ordenar:{" "}
                   <Select defaultValue="most-popular">
                     <SelectTrigger className="font-medium text-sm px-1.5 sm:text-base w-fit text-black bg-transparent shadow-none border-none">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="most-popular">Most Popular</SelectItem>
-                      <SelectItem value="low-price">Low Price</SelectItem>
-                      <SelectItem value="high-price">High Price</SelectItem>
+                      <SelectItem value="most-popular">Mais Popular</SelectItem>
+                      <SelectItem value="low-price">Menor Preço</SelectItem>
+                      <SelectItem value="high-price">Maior Preço</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
             </div>
             <div className="w-full grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-              {[
-                ...relatedProductData.slice(1, 4),
-                ...newArrivalsData.slice(1, 4),
-                ...topSellingData.slice(1, 4),
-              ].map((product) => (
+              {produtos.map((product) => (
                 <ProductCard key={product.id} data={product} />
               ))}
             </div>

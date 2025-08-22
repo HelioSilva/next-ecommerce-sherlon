@@ -3,6 +3,8 @@
 import { Product } from "@/types/product.types";
 import Image from "next/image";
 import React, { useState } from "react";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 const PhotoSection = ({ data }: { data: Product }) => {
   const [selected, setSelected] = useState<string>(data.srcUrl);
@@ -32,15 +34,17 @@ const PhotoSection = ({ data }: { data: Product }) => {
       )}
 
       <div className="flex items-center justify-center bg-[#F0EEED] rounded-[13px] sm:rounded-[20px] w-full sm:w-96 md:w-full mx-auto h-full max-h-[530px] min-h-[330px] lg:min-h-[380px] xl:min-h-[530px] overflow-hidden mb-3 lg:mb-0">
-        <Image
-          src={selected}
-          width={444}
-          height={530}
-          className="rounded-md w-full h-full object-cover hover:scale-110 transition-all duration-500"
-          alt={data.title}
-          priority
-          unoptimized
-        />
+        <Zoom>
+          <Image
+            src={selected}
+            width={444}
+            height={530}
+            className="rounded-md w-full h-full object-cover"
+            alt={data.title}
+            priority
+            unoptimized
+          />
+        </Zoom>
       </div>
     </div>
   );

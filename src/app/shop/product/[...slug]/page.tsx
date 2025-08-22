@@ -1,27 +1,20 @@
-import {
-  newArrivalsData,
-  relatedProductData,
-  topSellingData,
-} from "@/app/page";
+"use client";
+
 import ProductListSec from "@/components/common/ProductListSec";
 import BreadcrumbProduct from "@/components/product-page/BreadcrumbProduct";
 import Header from "@/components/product-page/Header";
 import Tabs from "@/components/product-page/Tabs";
+import { useProdutos } from "@/lib/hooks/useProducts";
 import { Product } from "@/types/product.types";
 import { notFound } from "next/navigation";
-
-const data: Product[] = [
-  ...newArrivalsData,
-  ...topSellingData,
-  ...relatedProductData,
-];
 
 export default function ProductPage({
   params,
 }: {
   params: { slug: string[] };
 }) {
-  const productData = data.find(
+  const { produtos, isLoading, error } = useProdutos();
+  const productData = produtos.find(
     (product) => product.id === Number(params.slug[0])
   );
 
@@ -39,9 +32,9 @@ export default function ProductPage({
         </section>
         <Tabs />
       </div>
-      <div className="mb-[50px] sm:mb-20">
+      {/* <div className="mb-[50px] sm:mb-20">
         <ProductListSec title="You might also like" data={relatedProductData} />
-      </div>
+      </div> */}
     </main>
   );
 }
