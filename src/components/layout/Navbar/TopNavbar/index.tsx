@@ -104,7 +104,7 @@ const TopNavbar = () => {
             <ResTopNavbar data={data} />
           </div>
           <p className="mr-3 md:mr-20  md:w-[300px]  ">
-            <img src="logo.svg" alt="" />
+            <img src="logo-pgn-ini.svg" alt="" />
           </p>
           {/* <Link
             href="/"
