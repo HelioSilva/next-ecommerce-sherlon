@@ -25,7 +25,7 @@ export default function Home() {
     <>
       <Header />
       {/* <Brands /> */}
-      <main className="my-[50px] sm:my-[72px]">
+      <main className="bg-[#FFF] text-[#685048] py-[50px] sm:py-[72px]">
         {prodNovidade.length > 0 && (
           <ProductListSec
             title="NOVIDADES"

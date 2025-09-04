@@ -53,7 +53,7 @@ const paymentBadgesData: PaymentBadge[] = [
 
 const Footer = () => {
   return (
-    <footer className="mt-10">
+    <footer className="">
       {/* <div className="relative">
         <div className="absolute bottom-0 w-full h-1/2 bg-[#F0F0F0]"></div>
         <div className="px-4">
@@ -97,11 +97,11 @@ const Footer = () => {
           </nav>
 
           <hr className="h-[1px] border-t-black/10 mb-6" />
-          <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center mb-2">
+          <div className="flex justify-center  items-center mb-2">
             <p className="text-sm text-center sm:text-left text-black/60 mb-4 sm:mb-0 sm:mr-1">
               {nameStore} © Feito por{" "}
               <Link
-                href="https://github.com/mohammadoftadeh"
+                href="#"
                 className="text-black font-medium"
               >
                 Computek
@@ -109,13 +109,13 @@ const Footer = () => {
               {", "}
               Designed by{" "}
               <Link
-                href="https://www.figma.com/@hamzauix"
+                href="#"
                 className="text-black font-medium"
               >
                 Computek
               </Link>
             </p>
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               {paymentBadgesData.map((badge, _, arr) => (
                 <span
                   key={badge.id}
@@ -134,7 +134,7 @@ const Footer = () => {
                   />
                 </span>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
         <LayoutSpacing />
