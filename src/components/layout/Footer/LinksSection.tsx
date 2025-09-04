@@ -41,43 +41,43 @@ const footerLinksData: FooterLinks[] = [
       },
     ],
   },
-  {
-    id: 3,
-    title: "Perguntas frequentes",
-    children: [
-      {
-        id: 31,
-        label: "Pedidos",
-        url: "#",
-      },
-      {
-        id: 32,
-        label: "Entrega",
-        url: "#",
-      },
-      {
-        id: 33,
-        label: "Pagamento",
-        url: "#",
-      },
-    ],
-  },
-  {
-    id: 4,
-    title: "Mais",
-    children: [
-      {
-        id: 41,
-        label: "Nosso blog",
-        url: "#",
-      },
-      {
-        id: 42,
-        label: "Galeria de fotos",
-        url: "#",
-      },
-    ],
-  },
+  // {
+  //   id: 3,
+  //   title: "Perguntas frequentes",
+  //   children: [
+  //     {
+  //       id: 31,
+  //       label: "Pedidos",
+  //       url: "#",
+  //     },
+  //     {
+  //       id: 32,
+  //       label: "Entrega",
+  //       url: "#",
+  //     },
+  //     {
+  //       id: 33,
+  //       label: "Pagamento",
+  //       url: "#",
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 4,
+  //   title: "Mais",
+  //   children: [
+  //     {
+  //       id: 41,
+  //       label: "Nosso blog",
+  //       url: "#",
+  //     },
+  //     {
+  //       id: 42,
+  //       label: "Galeria de fotos",
+  //       url: "#",
+  //     },
+  //   ],
+  // },
 ];
 
 const LinksSection = () => {
