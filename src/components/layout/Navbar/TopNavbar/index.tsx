@@ -103,8 +103,8 @@ const TopNavbar = () => {
           <div className="block md:hidden mr-3 ">
             <ResTopNavbar data={data} />
           </div>
-          <p className="mr-3 md:mr-20   md:w-[300px]  ">
-            <img src="images\logo.svg" alt="" />
+          <p className="mr-3 md:mr-20  md:w-[300px]  ">
+            <img src="logo.svg" alt="" />
           </p>
           {/* <Link
             href="/"
