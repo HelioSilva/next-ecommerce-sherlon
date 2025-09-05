@@ -78,6 +78,11 @@ const ProductCard = ({ data }: ProductCardProps) => {
           )
         )}
       </div>
+      <div className="flex items-center">
+        <span className="text-coffee text-xs xl:text-sm ml-[11px] xl:ml-[13px] pb-0.5 xl:pb-0">
+          {`Estoque: ${data.stock}`}
+        </span>
+      </div>
     </Link>
   );
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { integralCF } from "@/styles/fonts";
 import Link from "next/link";
@@ -14,63 +16,14 @@ import InputGroup from "@/components/ui/input-group";
 import ResTopNavbar from "./ResTopNavbar";
 import CartBtn from "./CartBtn";
 import { nameStore } from "@/const/name";
+import { useCategories } from "@/lib/hooks/useCategories";
 
-const data: NavMenu = [
+let data: NavMenu = [
   {
     id: 1,
-    label: "Loja",
+    label: "Categorias",
     type: "MenuList",
-    children: [
-      {
-        id: 10,
-        label: "Acessórios",
-        url: "/shop#acessorios",
-        description:
-          "Complete seu visual com acessórios exclusivos que destacam sua personalidade e estilo.",
-      },
-      {
-        id: 11,
-        label: "Anéis",
-        url: "/shop#aneis",
-        description:
-          "Descubra anéis sofisticados para eternizar momentos especiais e valorizar cada detalhe.",
-      },
-      {
-        id: 12,
-        label: "Berloques",
-        url: "/shop#berloques",
-        description:
-          "Personalize sua pulseira com berloques únicos que contam a sua história.",
-      },
-      {
-        id: 13,
-        label: "Braceletes",
-        url: "/shop#braceletes",
-        description:
-          "Braceletes modernos e elegantes para complementar qualquer ocasião.",
-      },
-      {
-        id: 14,
-        label: "Brincos",
-        url: "/shop#brincos",
-        description:
-          "Brincos delicados e marcantes para realçar sua beleza todos os dias.",
-      },
-      {
-        id: 15,
-        label: "Conjuntos",
-        url: "/shop#conjuntos",
-        description:
-          "Conjuntos harmoniosos para presentear ou renovar seu porta-joias com muito charme.",
-      },
-      {
-        id: 16,
-        label: "Correntes",
-        url: "/shop#correntes",
-        description:
-          "Correntes versáteis e estilosas para compor looks autênticos e sofisticados.",
-      },
-    ],
+    children: [],
   },
   // {
   //   id: 2,
@@ -83,7 +36,7 @@ const data: NavMenu = [
     id: 3,
     type: "MenuItem",
     label: "Novidades",
-    url: "/shop#novidades",
+    url: "/shop?categoria=Novidades",
     children: [],
   },
   // {
@@ -96,6 +49,19 @@ const data: NavMenu = [
 ];
 
 const TopNavbar = () => {
+  const { categorias, isLoading, error } = useCategories();
+
+  console.log("Categorias disponíveis:", categorias);
+
+  const categoriasMapeadas = categorias.map((cat, index) => ({
+    id: index,
+    label: cat,
+    url: `/shop?categoria=${cat.toLowerCase().replace(/\s+/g, "-")}`,
+    description: "",
+  }));
+
+  data[0].children = categoriasMapeadas;
+
   return (
     <nav className=" sticky top-0 bg-white z-20">
       <div className="flex relative max-w-frame mx-auto items-center justify-between md:justify-start py-5 md:py-6 px-4 xl:px-0">

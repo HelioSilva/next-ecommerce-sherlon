@@ -126,7 +126,7 @@ export default function CartPage() {
                   className="text-sm md:text-base font-medium bg-black rounded-full w-full py-4 h-[54px] md:h-[60px] group"
                   onClick={() =>
                     (window.location.href = enviarMensagemWhatsApp(
-                      "+5582996130940",
+                      process.env.NUM_WHATSAPP_RECEBE_PEDIDO || "",
                       MontarMensagemWA()
                     ))
                   }

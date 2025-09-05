@@ -23,9 +23,53 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useProdutos } from "@/lib/hooks/useProducts";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function ShopPage() {
-  const { produtos, isLoading, error } = useProdutos();
+  const [categoria, setCategoria] = useState<string>("");
+  const [ordenar, setOrdenar] = useState<string>("most-popular");
+
+  const { produtos, novidades, maisvendidos, isLoading, error } =
+    useProdutos(categoria);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const categoriaParam = searchParams.get("categoria");
+
+    if (categoriaParam) {
+      setCategoria(categoriaParam);
+    } else {
+      setCategoria("");
+    }
+  }, [searchParams]);
+
+  const produtosDaPagina =
+    categoria == "Novidades"
+      ? novidades
+      : categoria == "MaisVendidos"
+      ? maisvendidos
+      : produtos;
+
+  useEffect(() => {
+    switch (ordenar) {
+      case "most-popular":
+        // Lógica para ordenar por mais popular
+        break;
+      case "low-price":
+        produtosDaPagina.sort((a, b) => a.price - b.price);
+        // Lógica para ordenar por menor preço
+        break;
+      case "high-price":
+        produtosDaPagina.sort((a, b) => b.price - a.price);
+        // Lógica para ordenar por maior preço
+        break;
+      default:
+        break;
+    }
+  }, [produtosDaPagina, ordenar]);
+
   return (
     <main className="pb-20">
       <div className="max-w-frame mx-auto px-4 xl:px-0">
@@ -34,7 +78,7 @@ export default function ShopPage() {
         <div className="flex md:space-x-5 items-start">
           <div className="hidden md:block min-w-[295px] max-w-[295px] border border-black/10 rounded-[20px] px-5 md:px-6 py-5 space-y-5 md:space-y-6">
             <div className="flex items-center justify-between">
-              <span className="font-bold text-black text-xl">Filters</span>
+              <span className="font-bold text-black text-xl">Filtros</span>
               <FiSliders className="text-2xl text-black/40" />
             </div>
             <Filters />
@@ -42,7 +86,9 @@ export default function ShopPage() {
           <div className="flex flex-col w-full space-y-5">
             <div className="flex flex-col lg:flex-row lg:justify-between">
               <div className="flex items-center justify-between">
-                <h1 className="font-bold text-2xl md:text-[32px]">Categoria</h1>
+                <h1 className="font-bold text-2xl md:text-[32px]">
+                  {categoria}
+                </h1>
                 <MobileFilters />
               </div>
               <div className="flex flex-col sm:items-center sm:flex-row">
@@ -51,7 +97,7 @@ export default function ShopPage() {
                 </span>
                 <div className="flex items-center">
                   Ordenar:{" "}
-                  <Select defaultValue="most-popular">
+                  <Select defaultValue={ordenar} onValueChange={setOrdenar}>
                     <SelectTrigger className="font-medium text-sm px-1.5 sm:text-base w-fit text-black bg-transparent shadow-none border-none">
                       <SelectValue />
                     </SelectTrigger>
@@ -65,7 +111,7 @@ export default function ShopPage() {
               </div>
             </div>
             <div className="w-full grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-              {produtos.map((product) => (
+              {produtosDaPagina.map((product) => (
                 <ProductCard key={product.id} data={product} />
               ))}
             </div>

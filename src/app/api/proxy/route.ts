@@ -2,11 +2,24 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const ponto = url.searchParams.get("pontoDeSincronizacao") ?? "";
 
+  const clientId = process.env.NEXT_PUBLIC_API_CLIENT_ID ?? "";
+
+  console.log("Iniciando requisição para gerar o token");
+  const ApiToken = await fetch(
+    `http://ms-ecommerce.hiper.com.br/api/v1/auth/gerar-token/${clientId}`,
+    {
+      headers: {},
+    }
+  );
+
+  const dataToken = await ApiToken.json();
+  console.log("Token gerado com sucesso: ", dataToken.token);
+
   const externalResponse = await fetch(
-    `https://ms-ecommerce.hiper.com.br/api/v1/produtos/pontoDeSincronizacao?pontoDeSincronizacao=1328831`,
+    `https://ms-ecommerce.hiper.com.br/api/v1/produtos/pontoDeSincronizacao?pontoDeSincronizacao=0`, //1328831
     {
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN ?? ""}`,
+        Authorization: `Bearer ${dataToken.token}`,
       },
     }
   );

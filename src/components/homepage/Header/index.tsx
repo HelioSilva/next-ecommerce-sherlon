@@ -89,8 +89,8 @@ const Header = () => {
           </motion.div>
         </section>
         <motion.section
-          initial={{ y: "100px", opacity: 0, rotate: 10 }}
-          whileInView={{ y: "0", opacity: 1, rotate: 0 }}
+          initial={{ y: "-10", opacity: 0, rotate: 0 }}
+          whileInView={{ y: "-10", opacity: 1, rotate: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5, duration: 0.8 }}
           className="relative  min-h-[448px] md:min-h-[200px] md:w-[100%] bg-cover bg-top  bg-no-repeat bg-[url('/images/banner1.png')] md:bg-[url('/images/banner1.png')]"
