@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, toCapitalCase } from "@/lib/utils";
 import { integralCF } from "@/styles/fonts";
 import Link from "next/link";
 import React from "react";
@@ -55,7 +55,7 @@ const TopNavbar = () => {
 
   const categoriasMapeadas = categorias.map((cat, index) => ({
     id: index,
-    label: cat,
+    label: toCapitalCase(cat),
     url: `/shop?categoria=${cat.toLowerCase().replace(/\s+/g, "-")}`,
     description: "",
   }));
@@ -69,18 +69,9 @@ const TopNavbar = () => {
           <div className="block md:hidden mr-3 ">
             <ResTopNavbar data={data} />
           </div>
-          <p className="mr-3 md:mr-20  md:w-[300px]  ">
+          <Link href="/" className="mr-3 md:mr-20  md:w-[300px]  ">
             <img src="logo-pgn-ini.svg" alt="" />
-          </p>
-          {/* <Link
-            href="/"
-            className={cn([
-              integralCF.className,
-              "text-2xl lg:text-[32px] mb-2 mr-3 lg:mr-20",
-            ])}
-          >
-            {nameStore}
-          </Link> */}
+          </Link>
         </div>
         <NavigationMenu className=" text-2xl hidden md:flex mr-2 lg:mr-7">
           <NavigationMenuList>

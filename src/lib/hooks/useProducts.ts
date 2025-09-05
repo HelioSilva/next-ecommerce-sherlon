@@ -4,11 +4,7 @@ import { ProdutoHiper } from "@/types/productHiper.types";
 import { ResponseHiper } from "@/types/responseHiper.types";
 import { toCapitalCase } from "@/lib/utils";
 import { ROUTE_API_LOCAL } from "@/const/constantes.utils";
-
-const fetcher = (url: string) => {
-  console.log("Request para API executado:", new Date().toLocaleTimeString());
-  return fetch(url).then((res) => res.json());
-};
+import { fetcher } from "@/lib/fetcher";
 
 const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
   id: prod.codigo,
@@ -28,13 +24,12 @@ export function useProdutos(category?: string): {
   isLoading: boolean;
   error: any;
 } {
-  console.log("Hook useProdutos chamado com/sem categoria:", category);
   const { data, error, isLoading } = useSWR<ResponseHiper>(
     ROUTE_API_LOCAL,
     fetcher,
     {
-      refreshInterval: 600_000, // 10 minutos
-      dedupingInterval: 600_000, // evita refetch duplicado por 10 minutos
+      refreshInterval: 600000, // 10 minutos
+      dedupingInterval: 600000, // evita refetch duplicado por 10 minutos
       revalidateOnFocus: false, // não atualiza só porque voltou para a aba
     }
   );
@@ -68,7 +63,6 @@ export function useProdutos(category?: string): {
     };
   }
 
-  console.log("Dados recebidos da API/Cache:", data?.produtos.length);
   const produtosFiltrados = category
     ? data?.produtos.filter((prod: ProdutoHiper) =>
         prod.categoria?.toLowerCase().replace(/\s+/g, "-").includes(category)

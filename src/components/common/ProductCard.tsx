@@ -1,90 +1,91 @@
-import React from "react";
-import Rating from "../ui/Rating";
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/types/product.types";
 import { formatarPreco } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { FiShoppingCart, FiStar } from "react-icons/fi";
 
-type ProductCardProps = {
+interface ProductCardProps {
   data: Product;
-};
+}
 
-const ProductCard = ({ data }: ProductCardProps) => {
+export default function ProductCard({ data }: ProductCardProps) {
+  const { id, title, srcUrl, price, discount, rating, stock } = data;
+
+  const hasDiscount = discount.percentage > 0 || discount.amount > 0;
+  const finalPrice = hasDiscount
+    ? price -
+      (discount.amount > 0
+        ? discount.amount
+        : price * (discount.percentage / 100))
+    : price;
+
+  const isOutOfStock = false; //stock <= 0;
+
   return (
-    <Link
-      href={`/shop/product/${data.id}/${data.title.split(" ").join("-")}`}
-      className="flex flex-col items-start aspect-auto"
-    >
-      <div className="bg-[#F0EEED] rounded-[13px] lg:rounded-[20px] w-full lg:max-w-[295px] aspect-square mb-2.5 xl:mb-4 overflow-hidden">
-        <Image
-          src={data.srcUrl}
-          width={295}
-          height={298}
-          className="rounded-md w-full h-full object-contain hover:scale-110 transition-all duration-500"
-          alt={data.title}
-          priority
-        />
-      </div>
-      <strong className="text-coffee xl:text-xl">{data.title}</strong>
-      <div className="flex items-end mb-1 xl:mb-2">
-        <Rating
-          initialValue={data.rating}
-          allowFraction
-          SVGclassName="inline-block"
-          emptyClassName="fill-gray-50"
-          size={19}
-          readonly
-        />
-        <span className="text-coffee text-xs xl:text-sm ml-[11px] xl:ml-[13px] pb-0.5 xl:pb-0">
-          {data.rating.toFixed(1)}
-          <span className="text-coffee/60">/5</span>
-        </span>
-      </div>
-      <div className="flex items-center space-x-[5px] xl:space-x-2.5">
-        {data.discount.percentage > 0 ? (
-          <span className="font-bold text-black text-xl xl:text-2xl">
-            {`$${Math.round(
-              data.price - (data.price * data.discount.percentage) / 100
-            )}`}
-          </span>
-        ) : data.discount.amount > 0 ? (
-          <span className="font-bold text-coffee text-xl xl:text-2xl">
-            {`$${data.price - data.discount.amount}`}
-          </span>
-        ) : (
-          <span className="font-bold text-coffee text-xl xl:text-2xl">
-            {formatarPreco(data.price)}
-          </span>
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-gray-200/80 bg-white shadow-sm transition-all hover:shadow-md">
+      <Link
+        href={`/shop/product/${id}/${title.split(" ").join("-")}`}
+        className="cursor-pointer"
+        aria-label={title}
+      >
+        <div className="aspect-square overflow-hidden bg-gray-100">
+          <Image
+            src={srcUrl}
+            alt={title}
+            width={300}
+            height={300}
+            className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+        {hasDiscount && (
+          <Badge variant="destructive" className="absolute top-3 right-3">
+            {discount.percentage > 0 ? `${discount.percentage}% OFF` : "Oferta"}
+          </Badge>
         )}
-        {data.discount.percentage > 0 && (
-          <span className="font-bold text-coffee/40 line-through text-xl xl:text-2xl">
-            {formatarPreco(data.price)}
-          </span>
+        {isOutOfStock && (
+          <Badge variant="secondary" className="absolute top-3 left-3">
+            Esgotado
+          </Badge>
         )}
-        {data.discount.amount > 0 && (
-          <span className="font-bold text-coffee/40 line-through text-xl xl:text-2xl">
-            {formatarPreco(data.price)}
-          </span>
-        )}
-        {data.discount.percentage > 0 ? (
-          <span className="font-medium text-[10px] xl:text-xs py-1.5 px-3.5 rounded-full bg-[#FF3333]/10 text-[#FF3333]">
-            {`-${data.discount.percentage}%`}
-          </span>
-        ) : (
-          data.discount.amount > 0 && (
-            <span className="font-medium text-[10px] xl:text-xs py-1.5 px-3.5 rounded-full bg-[#FF3333]/10 text-[#FF3333]">
-              {`-$${data.discount.amount}`}
-            </span>
-          )
-        )}
-      </div>
-      <div className="flex items-center">
-        <span className="text-coffee text-xs xl:text-sm ml-[11px] xl:ml-[13px] pb-0.5 xl:pb-0">
-          {`Estoque: ${data.stock}`}
-        </span>
-      </div>
-    </Link>
-  );
-};
+      </Link>
 
-export default ProductCard;
+      <div className="flex flex-1 flex-col p-4">
+        <div className="flex-1">
+          <h3 className="text-base font-medium text-coffee-900">
+            <Link href={`/shop/product/${id}/${title.split(" ").join("-")}`}>
+              <span aria-hidden="true" className="absolute inset-0" />
+              {title}
+            </Link>
+          </h3>
+          {/* <div className="mt-1 flex items-center text-sm">
+            <FiStar className="h-4 w-4 text-yellow-400" />
+            <span className="ml-1 text-gray-500">{rating.toFixed(1)}</span>
+          </div> */}
+        </div>
+
+        <div className="mt-4 flex items-baseline space-x-2">
+          <p className="text-lg font-semibold text-coffee-900">
+            {formatarPreco(finalPrice)}
+          </p>
+          {hasDiscount && (
+            <p className="text-sm text-gray-500 line-through">
+              {formatarPreco(price)}
+            </p>
+          )}
+        </div>
+
+        <Button
+          variant="default"
+          size="sm"
+          className="mt-4 w-full border-transparent bg-coffee text-white hover:bg-coffee/90"
+          disabled={isOutOfStock}
+        >
+          <FiShoppingCart className="mr-2 h-4 w-4" />
+          {isOutOfStock ? "Indisponível" : "Adicionar ao Carrinho"}
+        </Button>
+      </div>
+    </div>
+  );
+}

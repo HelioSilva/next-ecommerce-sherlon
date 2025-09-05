@@ -2,9 +2,9 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const ponto = url.searchParams.get("pontoDeSincronizacao") ?? "";
 
-  const clientId = process.env.NEXT_PUBLIC_API_CLIENT_ID ?? "";
+  const clientId = process.env.SECRET_KEY ?? "";
 
-  console.log("Iniciando requisição para gerar o token");
+  console.log("Iniciando requisição para gerar o token :" + clientId);
   const ApiToken = await fetch(
     `http://ms-ecommerce.hiper.com.br/api/v1/auth/gerar-token/${clientId}`,
     {
