@@ -67,14 +67,14 @@ const Footer = () => {
               <h1
                 className={cn([
                   integralCF.className,
-                  "text-[28px] lg:text-[32px] mb-6",
+                  "text-[28px] text-[#685048] lg:text-[32px] mb-6",
                 ])}
               >
                 {nameStore}
               </h1>
               <p className="text-black/60 text-sm mb-9">
-                Descrição da loja. Poucas palavras que resumem a essência da
-                marca.
+                Mais do que joias, criamos símbolos de beleza e significado.
+                
               </p>
               <div className="flex items-center">
                 {socialsData.map((social) => (
@@ -88,33 +88,41 @@ const Footer = () => {
                 ))}
               </div>
             </div>
-            <div className="hidden lg:grid col-span-9 lg:grid-cols-4 lg:pl-10">
+            <div className=" hidden lg:grid col-span-9 lg:grid-cols-3 lg:pl-10">
               <LinksSection />
+              <div className="">
+                <div className="flex items-center justify-center">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3933.210812314014!2d-35.74124377490319!3d-9.663020702109396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7014500686fa60b%3A0x86f6318eaaf74c18!2sSherlon%20Joias%20Silver!5e0!3m2!1spt-BR!2sbr!4v1757338099559!5m2!1spt-BR!2sbr"
+                    width="400"
+                    height="200"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+              </div>
             </div>
-            <div className="grid lg:hidden grid-cols-2 sm:grid-cols-4">
+            {/* <div className=" grid lg:hidden grid-cols-2 sm:grid-cols-4">
               <LinksSection />
-            </div>
+            </div> */}
           </nav>
 
           <hr className="h-[1px] border-t-black/10 mb-6" />
           <div className="flex justify-center  items-center mb-2">
             <p className="text-sm text-center sm:text-left text-black/60 mb-4 sm:mb-0 sm:mr-1">
               {nameStore} © Feito por{" "}
-              <Link
-                href="#"
-                className="text-black font-medium"
-              >
+              <Link href="#" className="text-black font-medium">
                 Computek
               </Link>
               {", "}
               Designed by{" "}
-              <Link
-                href="#"
-                className="text-black font-medium"
-              >
+              <Link href="#" className="text-black font-medium">
                 Computek
               </Link>
             </p>
+
             {/* <div className="flex items-center">
               {paymentBadgesData.map((badge, _, arr) => (
                 <span

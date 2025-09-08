@@ -65,7 +65,7 @@ const Header = () => {
           >
             <div className="flex flex-col">
               <span className="text-[#e3d5ca] font-bold  md:text-2xl ">
-                AUTENTICA
+                AUTÊNTICA
               </span>
             </div>
             <Separator
