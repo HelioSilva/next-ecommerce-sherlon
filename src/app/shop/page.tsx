@@ -78,7 +78,7 @@ export default function ShopPage() {
         <div className="flex md:space-x-5 items-start">
           <div className="hidden md:block min-w-[295px] max-w-[295px] border border-black/10 rounded-[20px] px-5 md:px-6 py-5 space-y-5 md:space-y-6">
             <div className="flex items-center justify-between">
-              <span className="font-bold text-black text-xl">Filtros</span>
+              <span className="font-bold text-[#685048] text-xl">Filtros</span>
               <FiSliders className="text-2xl text-black/40" />
             </div>
             <Filters />
@@ -86,7 +86,7 @@ export default function ShopPage() {
           <div className="flex flex-col w-full space-y-5">
             <div className="flex flex-col lg:flex-row lg:justify-between">
               <div className="flex items-center justify-between">
-                <h1 className="font-bold text-2xl md:text-[32px]">
+                <h1 className="font-bold text-2xl md:text-[32px] text-[#685048]">
                   {categoria}
                 </h1>
                 <MobileFilters />

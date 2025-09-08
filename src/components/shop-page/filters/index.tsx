@@ -21,7 +21,7 @@ const Filters = () => {
       <DressStyleSection /> */}
       <Button
         type="button"
-        className="bg-black w-full rounded-full text-sm font-medium py-4 h-12"
+        className="bg-[#685048] w-full rounded-full text-sm font-medium py-4 h-12"
       >
         Aplicar filtro
       </Button>

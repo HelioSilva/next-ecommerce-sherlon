@@ -11,7 +11,7 @@ const PriceSection = () => {
   return (
     <Accordion type="single" collapsible defaultValue="filter-price">
       <AccordionItem value="filter-price" className="border-none">
-        <AccordionTrigger className="text-black font-bold text-xl hover:no-underline p-0 py-0.5">
+        <AccordionTrigger className="text-[#685048] font-bold text-xl hover:no-underline p-0 py-0.5">
           Preço
         </AccordionTrigger>
         <AccordionContent className="pt-4" contentClassName="overflow-visible">
@@ -21,6 +21,7 @@ const PriceSection = () => {
             max={5000}
             step={10}
             label="R$"
+            color="#685048"
           />
           <div className="mb-3" />
         </AccordionContent>
