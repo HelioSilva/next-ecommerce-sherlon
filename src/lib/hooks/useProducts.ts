@@ -19,8 +19,6 @@ const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
 
 export function useProdutos(category?: string): {
   produtos: Product[];
-  novidades: Product[];
-  maisvendidos: Product[];
   isLoading: boolean;
   error: any;
 } {
@@ -36,14 +34,13 @@ export function useProdutos(category?: string): {
 
   if (category && category.includes("Novidades")) {
     return {
-      produtos: [],
-      novidades: data?.produtos
+      produtos: data?.produtos
         ? data.produtos
             .sort((a, b) => b.codigo - a.codigo)
             .slice(0, 10)
             .map(convertHiperProductToProduct)
+            .slice(-8)
         : [],
-      maisvendidos: [],
       isLoading,
       error,
     };
@@ -51,12 +48,11 @@ export function useProdutos(category?: string): {
 
   if (category && category.includes("MaisVendidos")) {
     return {
-      produtos: [],
-      novidades: [],
-      maisvendidos: data?.produtos
+      produtos: data?.produtos
         ? data.produtos
             .filter((prod: ProdutoHiper) => prod.marca == "SHERLON")
             .map(convertHiperProductToProduct)
+            .slice(4, 8)
         : [],
       isLoading,
       error,
@@ -75,13 +71,8 @@ export function useProdutos(category?: string): {
       )
     : [];
 
-  const novidades: Product[] = !category ? produtos.slice(-8) : [];
-  const maisvendidos: Product[] = !category ? produtos.slice(4, 8) : [];
-
   return {
     produtos,
-    novidades,
-    maisvendidos,
     isLoading,
     error,
   };

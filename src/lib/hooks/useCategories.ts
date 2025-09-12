@@ -23,7 +23,9 @@ export function useCategories() {
   );
 
   return {
-    categorias,
+    categorias: categorias.sort((a, b) =>
+      a.localeCompare(b, "pt-BR", { sensitivity: "base" })
+    ),
     isLoading,
     error,
   };
