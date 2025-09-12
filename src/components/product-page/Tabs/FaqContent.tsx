@@ -48,7 +48,7 @@ const FaqContent = () => {
   return (
     <section>
       <h3 className="text-xl sm:text-2xl font-bold text-black mb-5 sm:mb-6">
-        Frequently asked questions
+        Perguntas frequentes
       </h3>
       <Accordion type="single" collapsible>
         {faqsData.map((faq, idx) => (

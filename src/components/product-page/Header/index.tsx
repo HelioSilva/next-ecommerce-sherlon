@@ -24,20 +24,6 @@ const Header = ({ data }: { data: Product }) => {
           >
             {data.title}
           </h1>
-          <div className="flex items-center mb-3 sm:mb-3.5">
-            <Rating
-              initialValue={data.rating}
-              allowFraction
-              SVGclassName="inline-block"
-              emptyClassName="fill-gray-50"
-              size={25}
-              readonly
-            />
-            <span className="text-coffee text-xs sm:text-sm ml-[11px] sm:ml-[13px] pb-0.5 sm:pb-0">
-              {data.rating.toFixed(1)}
-              <span className="text-coffee/60">/5</span>
-            </span>
-          </div>
           <div className="flex items-center space-x-2.5 sm:space-x-3 mb-5">
             {data.discount.percentage > 0 ? (
               <span className="font-bold text-coffee text-2xl sm:text-[32px]">
@@ -79,10 +65,10 @@ const Header = ({ data }: { data: Product }) => {
           <p className="text-sm sm:text-base text-coffee/60 mb-5">
             {data.title}
           </p>
-          <hr className="h-[1px] border-t-coffee/10 mb-5" />
+          {/* <hr className="h-[1px] border-t-coffee/10 mb-5" />
           <ColorSelection />
           <hr className="h-[1px] border-t-coffee/10 my-5" />
-          <SizeSelection />
+          <SizeSelection /> */}
           <hr className="hidden md:block h-[1px] border-t-coffee/10 my-5" />
           <AddToCardSection data={data} />
         </div>
