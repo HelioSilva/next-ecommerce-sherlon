@@ -37,6 +37,7 @@ export default function ProductCard({ data }: ProductCardProps) {
             width={300}
             height={300}
             className="rounded-md w-full h-full object-contain hover:scale-110 transition-all duration-500"
+            unoptimized
           />
         </div>
         {hasDiscount && (

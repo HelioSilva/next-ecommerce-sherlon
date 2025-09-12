@@ -27,6 +27,7 @@ const PhotoSection = ({ data }: { data: Product }) => {
                 className="rounded-md w-full h-full object-cover hover:scale-110 transition-all duration-500"
                 alt={data.title}
                 priority
+                unoptimized
               />
             </button>
           ))}
