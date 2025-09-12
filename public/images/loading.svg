@@ -1,1 +1,86 @@
-﻿<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><circle fill='#B15C5C' stroke='#B15C5C' stroke-width='4' r='15' cx='40' cy='65'><animate attributeName='cy' calcMode='spline' dur='2' values='65;135;65;' keySplines='.5 0 .5 1;.5 0 .5 1' repeatCount='indefinite' begin='-.4'></animate></circle><circle fill='#B15C5C' stroke='#B15C5C' stroke-width='4' r='15' cx='100' cy='65'><animate attributeName='cy' calcMode='spline' dur='2' values='65;135;65;' keySplines='.5 0 .5 1;.5 0 .5 1' repeatCount='indefinite' begin='-.2'></animate></circle><circle fill='#B15C5C' stroke='#B15C5C' stroke-width='4' r='15' cx='160' cy='65'><animate attributeName='cy' calcMode='spline' dur='2' values='65;135;65;' keySplines='.5 0 .5 1;.5 0 .5 1' repeatCount='indefinite' begin='0'></animate></circle></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 200 200"
+   version="1.1"
+   id="svg3"
+   sodipodi:docname="loading.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     id="namedview3"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.515"
+     inkscape:cx="99.801193"
+     inkscape:cy="100"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="1432"
+     inkscape:window-y="326"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3" />
+  <circle
+     fill="#B15C5C"
+     stroke="#B15C5C"
+     stroke-width="4"
+     r="15"
+     cx="40"
+     cy="65"
+     id="circle1"
+     style="fill:#685048;fill-opacity:1;stroke:#685048;stroke-opacity:1">
+    <animate
+       attributeName="cy"
+       calcMode="spline"
+       dur="2"
+       values="65;135;65;"
+       keySplines=".5 0 .5 1;.5 0 .5 1"
+       repeatCount="indefinite"
+       begin="-.4" />
+  </circle>
+  <circle
+     fill="#B15C5C"
+     stroke="#B15C5C"
+     stroke-width="4"
+     r="15"
+     cx="100"
+     cy="65"
+     id="circle2"
+     style="fill:#685048;fill-opacity:1;stroke:#685048;stroke-opacity:1">
+    <animate
+       attributeName="cy"
+       calcMode="spline"
+       dur="2"
+       values="65;135;65;"
+       keySplines=".5 0 .5 1;.5 0 .5 1"
+       repeatCount="indefinite"
+       begin="-.2" />
+  </circle>
+  <circle
+     fill="#B15C5C"
+     stroke="#B15C5C"
+     stroke-width="4"
+     r="15"
+     cx="160"
+     cy="65"
+     id="circle3"
+     style="fill:#685048;fill-opacity:1;stroke:#685048;stroke-opacity:1">
+    <animate
+       attributeName="cy"
+       calcMode="spline"
+       dur="2"
+       values="65;135;65;"
+       keySplines=".5 0 .5 1;.5 0 .5 1"
+       repeatCount="indefinite"
+       begin="0" />
+  </circle>
+</svg>
