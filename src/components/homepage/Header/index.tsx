@@ -10,8 +10,8 @@ import * as motion from "framer-motion/client";
 const Header = () => {
   return (
     <header className="bg-[#685048] pt-10  overflow-hidden">
-      <div className="md:max-w-frame mx-auto md:h-[100vh] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-        <section className=" max-w-frame  md:flex flex-col md:h-[600px] justify-between px-4">
+      <div className=" md:max-w-frame mx-auto md:h-[100vh] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+        <section className=" banner-bg max-w-frame  md:flex flex-col  gap-12 px-4">
           <motion.h2
             initial={{ y: "100px", opacity: 0, rotate: 10 }}
             whileInView={{ y: "0", opacity: 1, rotate: 0 }}
@@ -22,6 +22,7 @@ const Header = () => {
               "text-4xl text-[#e3d5ca] lg:text-[56px] lg:leading-[72px]",
               "tracking-wide",
               "mb-8",
+
               "max-w-xl", // limita a largura do texto
               "text-left", // mantém alinhado à esquerda
             ])}
@@ -93,7 +94,7 @@ const Header = () => {
           whileInView={{ y: "-10", opacity: 1, rotate: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="relative  min-h-[448px] md:min-h-[200px] md:w-[100%] bg-cover bg-top  bg-no-repeat bg-[url('/images/banner1.png')] md:bg-[url('/images/banner1.png')]"
+          className="relative min-h-[448px] md:min-h-[428px] bg-contain banner-bg bg-top bg-no-repeat bg-[url('/images/banner.png')]"
         ></motion.section>
       </div>
     </header>

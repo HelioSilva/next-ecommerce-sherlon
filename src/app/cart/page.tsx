@@ -96,7 +96,7 @@ export default function CartPage() {
                   </div>
                   <hr className="border-t-black/10" />
                   <div className="flex items-center justify-between">
-                    <span className="md:text-xl text-black">Total</span>
+                    <span className="md:text-xl text-black">Total s</span>
                     <span className="text-xl md:text-2xl font-bold">
                       {formatarPreco(Math.round(adjustedTotalPrice))}
                     </span>
@@ -140,9 +140,9 @@ export default function CartPage() {
         ) : (
           <div className="flex items-center flex-col text-gray-300 mt-32">
             <TbBasketExclamation strokeWidth={1} className="text-6xl" />
-            <span className="block mb-4">Your shopping cart is empty.</span>
-            <Button className="rounded-full w-24" asChild>
-              <Link href="/shop">Shop</Link>
+            <span className="block mb-4">Seu carrinho está vazio.</span>
+            <Button className="rounded-full w-24 bg-[#685048]" asChild>
+              <Link href="/shop">Voltar</Link>
             </Button>
           </div>
         )}
