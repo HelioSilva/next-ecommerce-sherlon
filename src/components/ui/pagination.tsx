@@ -75,7 +75,7 @@ const PaginationPrevious = ({
     {...props}
   >
     <ArrowLeftIcon className="h-4 w-4 hidden xs:block" />
-    <span className="xs:ml-2">Previous</span>
+    <span className="xs:ml-2">Anterior</span>
   </PaginationLink>
 );
 PaginationPrevious.displayName = "PaginationPrevious";
@@ -90,7 +90,7 @@ const PaginationNext = ({
     className={cn("gap-1 px-2.5 xs:pr-2.5", className)}
     {...props}
   >
-    <span className="xs:mr-2">Next</span>
+    <span className="xs:mr-2">Próximo</span>
     <ArrowRightIcon className="h-4 w-4 hidden xs:block" />
   </PaginationLink>
 );

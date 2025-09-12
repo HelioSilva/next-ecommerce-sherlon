@@ -64,7 +64,7 @@ export default function Home() {
           <ProductListSec
             title="NOVIDADES"
             data={novidades}
-            viewAllLink="/shop?categoria=Novidades"
+            viewAllLink="/shop#novidades"
           />
         )}
         <div className="max-w-frame mx-auto px-4 xl:px-0">
