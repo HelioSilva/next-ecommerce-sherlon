@@ -1,12 +1,12 @@
 "use client";
 
-import ProductListSec from "@/components/common/ProductListSec";
 import BreadcrumbProduct from "@/components/product-page/BreadcrumbProduct";
 import Header from "@/components/product-page/Header";
 import Tabs from "@/components/product-page/Tabs";
 import { useProdutos } from "@/lib/hooks/useProducts";
-import { Product } from "@/types/product.types";
-import { notFound } from "next/navigation";
+import Loading from "@/components/common/Loading";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function ProductPage({
   params,
@@ -18,23 +18,33 @@ export default function ProductPage({
     (product) => product.id === Number(params.slug[0])
   );
 
-  if (!productData?.title) {
-    notFound();
-  }
-
   return (
     <main>
       <div className="max-w-frame mx-auto px-4 xl:px-0">
         <hr className="h-[1px] border-t-black/10 mb-5 sm:mb-6" />
-        <BreadcrumbProduct title={productData?.title ?? "product"} />
+        {productData != undefined ? (
+          <BreadcrumbProduct title={productData.title} />
+        ) : (
+          <>
+            <Skeleton width={250} />
+
+            <div className="flex flex-col space-x-[10px]">
+              <div className="h-[2px]">
+                <Skeleton height={300} />
+              </div>
+              <div className="h-[2px]">
+                <Skeleton height={300} />
+              </div>
+            </div>
+          </>
+        )}
+
         <section className="mb-11">
-          <Header data={productData} />
+          {isLoading && <Loading ref={null} />}
+          {productData != undefined && <Header data={productData} />}
         </section>
         <Tabs />
       </div>
-      {/* <div className="mb-[50px] sm:mb-20">
-        <ProductListSec title="You might also like" data={relatedProductData} />
-      </div> */}
     </main>
   );
 }

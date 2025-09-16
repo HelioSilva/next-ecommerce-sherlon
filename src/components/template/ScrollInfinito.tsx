@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import Loading from "../common/Loading";
 const ScrollInfinito = ({
   loaderRef,
   children,
@@ -14,16 +15,7 @@ const ScrollInfinito = ({
       {children}
 
       {/* Loader aparece no final */}
-      {loading && (
-        <div ref={loaderRef} className="flex justify-center py-10">
-          <Image
-            src="/images/loading.svg"
-            alt="loading"
-            width={128}
-            height={128}
-          />
-        </div>
-      )}
+      {loading && <Loading ref={loaderRef} />}
     </div>
   );
 };
