@@ -70,7 +70,7 @@ const TopNavbar = () => {
             <ResTopNavbar data={data} />
           </div>
           <Link href="/" className="mr-3 md:mr-20  md:w-[300px]  ">
-            <img src="logo-pgn-ini.svg" alt="" />
+            <img src="/images/logo-pgn-ini.svg" alt="" />
           </Link>
         </div>
         <NavigationMenu className=" text-2xl hidden md:flex mr-2 lg:mr-7">
