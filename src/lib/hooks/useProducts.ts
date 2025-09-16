@@ -3,7 +3,10 @@ import { Product } from "@/types/product.types";
 import { ProdutoHiper } from "@/types/productHiper.types";
 import { ResponseHiper } from "@/types/responseHiper.types";
 import { toCapitalCase } from "@/lib/utils";
-import { ROUTE_API_LOCAL } from "@/const/constantes.utils";
+import {
+  DESCRICAO_TAMANHO_PADRAO,
+  ROUTE_API_LOCAL,
+} from "@/const/constantes.utils";
 import { fetcher } from "@/lib/fetcher";
 
 const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
@@ -15,6 +18,10 @@ const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
   discount: { amount: 0, percentage: 0 },
   rating: 4.5,
   stock: prod.quantidadeEmEstoque ?? 0,
+  sizes:
+    prod.descricao && prod.descricao.split(",").length > 1
+      ? prod.descricao.split(",")
+      : [DESCRICAO_TAMANHO_PADRAO],
 });
 
 export function useProdutos(category?: string): {

@@ -65,10 +65,7 @@ const Header = ({ data }: { data: Product }) => {
           <p className="text-sm sm:text-base text-coffee/60 mb-5">
             {data.title}
           </p>
-          {/* <hr className="h-[1px] border-t-coffee/10 mb-5" />
-          <ColorSelection />
-          <hr className="h-[1px] border-t-coffee/10 my-5" />
-          <SizeSelection /> */}
+          <SizeSelection sizes={data.sizes} />
           <hr className="hidden md:block h-[1px] border-t-coffee/10 my-5" />
           <AddToCardSection data={data} />
         </div>

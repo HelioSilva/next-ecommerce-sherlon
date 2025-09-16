@@ -1,3 +1,4 @@
+import { DESCRICAO_TAMANHO_PADRAO } from "@/const/constantes.utils";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -18,7 +19,7 @@ const initialState: ProductsState = {
     name: "Brown",
     code: "bg-[#4F4631]",
   },
-  sizeSelection: "Large",
+  sizeSelection: DESCRICAO_TAMANHO_PADRAO,
 };
 
 export const productsSlice = createSlice({

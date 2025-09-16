@@ -12,4 +12,5 @@ export type Product = {
   discount: Discount;
   rating: number;
   stock: number;
+  sizes: string[];
 };

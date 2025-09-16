@@ -4,21 +4,25 @@ import { setSizeSelection } from "@/lib/features/products/productsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/redux";
 import { RootState } from "@/lib/store";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { use, useEffect } from "react";
 
-const SizeSelection = () => {
+const SizeSelection = ({ sizes }: { sizes: string[] }) => {
   const { sizeSelection } = useAppSelector(
     (state: RootState) => state.products
   );
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    if (sizes.length > 0) {
+      dispatch(setSizeSelection(sizes[0]));
+    }
+  }, [sizes]);
+
   return (
     <div className="flex flex-col">
-      <span className="text-sm sm:text-base text-black/60 mb-4">
-        Choose Size
-      </span>
+      <span className="text-sm sm:text-base text-black/60 mb-4">Tamanho</span>
       <div className="flex items-center flex-wrap lg:space-x-3">
-        {["Small", "Medium", "Large", "X-Large"].map((size, index) => (
+        {sizes.map((size: any, index: number) => (
           <button
             key={index}
             type="button"
