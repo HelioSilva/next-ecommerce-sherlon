@@ -31,6 +31,25 @@ export function enviarMensagemWhatsApp(phoneE164: string, message: string) {
   )}?text=${encodeURIComponent(message)}`;
 }
 
+export function formatCpfCnpj(value: string) {
+  const onlyNumbers = value.replace(/\D/g, "");
+
+  if (onlyNumbers.length <= 11) {
+    // CPF: 123.456.789-09
+    return onlyNumbers
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+  } else {
+    // CNPJ: 12.345.678/0001-95
+    return onlyNumbers
+      .replace(/^(\d{2})(\d)/, "$1.$2")
+      .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+      .replace(/\.(\d{3})(\d)/, ".$1/$2")
+      .replace(/(\d{4})(\d{1,2})$/, "$1-$2");
+  }
+}
+
 export const converterUnidadeMedida = (unidade: string) => {
   switch (unidade.toLowerCase()) {
     case "kg":
