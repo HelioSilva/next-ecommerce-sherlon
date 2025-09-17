@@ -40,7 +40,7 @@ export default function ProductPage({
         )}
 
         <section className="mb-11">
-          {isLoading && <Loading ref={null} />}
+          {isLoading && <Loading loadRef={null} />}
           {productData != undefined && <Header data={productData} />}
         </section>
         <Tabs />

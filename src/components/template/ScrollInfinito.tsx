@@ -15,7 +15,7 @@ const ScrollInfinito = ({
       {children}
 
       {/* Loader aparece no final */}
-      {loading && <Loading ref={loaderRef} />}
+      {loading && <Loading loadRef={loaderRef} />}
     </div>
   );
 };
