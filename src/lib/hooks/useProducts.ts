@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { Product } from "@/types/product.types";
 import { ProdutoHiper } from "@/types/productHiper.types";
 import { ResponseHiper } from "@/types/responseHiper.types";
-import { toCapitalCase } from "@/lib/utils";
+import { converterUnidadeMedida, toCapitalCase } from "@/lib/utils";
 import {
   DESCRICAO_TAMANHO_PADRAO,
   ROUTE_API_LOCAL,
@@ -22,6 +22,7 @@ const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
     prod.descricao && prod.descricao.split(",").length > 1
       ? prod.descricao.split(",")
       : [DESCRICAO_TAMANHO_PADRAO],
+  unitOfMeasure: converterUnidadeMedida(prod.unidade),
 });
 
 export function useProdutos(category?: string): {

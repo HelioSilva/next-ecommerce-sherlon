@@ -13,4 +13,5 @@ export type Product = {
   rating: number;
   stock: number;
   sizes: string[];
+  unitOfMeasure: string;
 };

@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Product } from "@/types/product.types";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -34,13 +35,16 @@ const PhotoSection = ({ data }: { data: Product }) => {
         </div>
       )}
 
-      <div className="flex items-center justify-center bg-[#F0EEED] rounded-[13px] sm:rounded-[20px] w-full sm:w-96 md:w-full mx-auto h-full max-h-[530px] min-h-[330px] lg:min-h-[380px] xl:min-h-[530px] overflow-hidden mb-3 lg:mb-0">
+      <div className="relative  flex items-center justify-center bg-[#F0EEED] rounded-[13px] sm:rounded-[20px] w-full sm:w-96 md:w-full mx-auto h-full max-h-[530px] min-h-[330px] lg:min-h-[380px] xl:min-h-[530px] overflow-hidden mb-3 lg:mb-0">
+        <Badge variant="secondary" className="absolute top-3 left-3">
+          Vendido por {data.unitOfMeasure}
+        </Badge>
         <Zoom>
           <Image
             src={selected}
             width={444}
             height={530}
-            className="rounded-md w-full h-full object-cover"
+            className="rounded-md"
             alt={data.title}
             priority
             unoptimized

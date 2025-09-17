@@ -30,3 +30,16 @@ export function enviarMensagemWhatsApp(phoneE164: string, message: string) {
     ""
   )}?text=${encodeURIComponent(message)}`;
 }
+
+export const converterUnidadeMedida = (unidade: string) => {
+  switch (unidade.toLowerCase()) {
+    case "kg":
+      return `peso`;
+    case "gr":
+      return `gramas`;
+    case "pa":
+      return `par`;
+    default:
+      return `unidade`;
+  }
+};
