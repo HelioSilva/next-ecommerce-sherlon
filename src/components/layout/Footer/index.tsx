@@ -13,18 +13,13 @@ import { nameStore } from "@/const/name";
 const socialsData: SocialNetworks[] = [
   {
     id: 1,
-    icon: <FaTwitter />,
-    url: "https://twitter.com",
+    icon: <FaFacebookF />,
+    url: "https://facebook.com/sherlonjoias",
   },
   {
     id: 2,
-    icon: <FaFacebookF />,
-    url: "https://facebook.com",
-  },
-  {
-    id: 3,
     icon: <FaInstagram />,
-    url: "https://instagram.com",
+    url: "https://instagram.com/sherlonjoiasoficial",
   },
 ];
 
