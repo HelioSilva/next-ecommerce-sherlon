@@ -58,6 +58,7 @@ export default function Home() {
   return (
     <>
       <Header />
+
       {/* <Brands /> */}
       <main className="bg-[#FFF] text-[#685048] py-[50px] sm:py-[72px]">
         {novidades.length > 0 && (
@@ -104,7 +105,7 @@ export default function Home() {
                       "text-[32px] md:text-5xl mb-8 md:mb-14 capitalize",
                     ])}
                   >
-                    Loja
+                    Joias
                   </motion.h2>
                   <div className="flex md:space-x-5 items-start">
                     <ScrollInfinito

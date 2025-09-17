@@ -22,7 +22,7 @@ export function MenuList({ data, label }: MenuListProps) {
         {label}
       </NavigationMenuTrigger>
       <NavigationMenuContent>
-        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+        <ul className="md:max-h-[50vh] overflow-y-auto  grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
           {data.map((item) => (
             <ListItem key={item.id} title={item.label} href={item.url ?? "/"}>
               {item.description ?? ""}

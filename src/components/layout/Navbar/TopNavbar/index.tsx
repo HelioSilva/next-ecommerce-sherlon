@@ -73,7 +73,7 @@ const TopNavbar = () => {
             <img src="/images/logo-pgn-ini.svg" alt="" />
           </Link>
         </div>
-        <NavigationMenu className=" text-2xl hidden md:flex mr-2 lg:mr-7">
+        <NavigationMenu className="text-2xl hidden md:flex mr-2 lg:mr-7">
           <NavigationMenuList>
             {data.map((item) => (
               <React.Fragment key={item.id}>
@@ -87,7 +87,7 @@ const TopNavbar = () => {
             ))}
           </NavigationMenuList>
         </NavigationMenu>
-        <InputGroup className="hidden md:flex bg-[#F0F0F0] mr-3 lg:mr-10">
+        <InputGroup className=" hidden md:flex bg-[#F0F0F0] mr-3 lg:mr-10">
           <InputGroup.Text>
             <Image
               priority
