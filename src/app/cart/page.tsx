@@ -3,7 +3,12 @@
 import BreadcrumbCart from "@/components/cart-page/BreadcrumbCart";
 import ProductCard from "@/components/cart-page/ProductCard";
 import { Button } from "@/components/ui/button";
-import { cn, enviarMensagemWhatsApp, formatarPreco, formatCpfCnpj } from "@/lib/utils";
+import {
+  cn,
+  enviarMensagemWhatsApp,
+  formatarPreco,
+  formatCpfCnpj,
+} from "@/lib/utils";
 import { integralCF } from "@/styles/fonts";
 import { FaArrowRight } from "react-icons/fa6";
 import { TbBasketExclamation } from "react-icons/tb";
@@ -66,7 +71,7 @@ export default function CartPage() {
     }
 
     window.location.href = enviarMensagemWhatsApp(
-      process.env.NUM_WHATSAPP_RECEBE_PEDIDO || "",
+      process.env.NEXT_PUBLIC_NUM_WHATSAPP_RECEBE_PEDIDO || "",
       MontarMensagemWA()
     );
   };

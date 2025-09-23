@@ -9,7 +9,7 @@ import {
 } from "@/const/constantes.utils";
 import { fetcher } from "@/lib/fetcher";
 
-const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
+export const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
   id: prod.codigo,
   title: toCapitalCase(prod.nome),
   srcUrl: prod.imagem ? prod.imagem : "/images/semimagem.png",
@@ -45,9 +45,9 @@ export function useProdutos(category?: string): {
       produtos: data?.produtos
         ? data.produtos
             .sort((a, b) => b.codigo - a.codigo)
-            .slice(0, 10)
+            .slice(0, 24)
             .map(convertHiperProductToProduct)
-            .slice(-8)
+            .slice(-24)
         : [],
       isLoading,
       error,

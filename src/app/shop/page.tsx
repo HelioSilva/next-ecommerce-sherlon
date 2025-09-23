@@ -12,7 +12,6 @@ import {
 import MobileFilters from "@/components/shop-page/filters/MobileFilters";
 import Filters from "@/components/shop-page/filters";
 import { FiSliders } from "react-icons/fi";
-import ProductCard from "@/components/common/ProductCard";
 import { useProdutos } from "@/lib/hooks/useProducts";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -20,29 +19,17 @@ import { toCapitalCase } from "@/lib/utils";
 import ScrollInfinito from "@/components/template/ScrollInfinito";
 
 export default function ShopPage() {
-  const QTD_PRODUTOS_VISIVEIS = parseInt(
-    process.env.NEXT_PUBLIC_PRODUTOS_VISIVEIS_POR_LOADING || "10",
-    10
-  );
   const [categoria, setCategoria] = useState<string>("");
   const [ordenar, setOrdenar] = useState<string>("most-popular");
-  const [visibleCount, setVisibleCount] = useState(QTD_PRODUTOS_VISIVEIS);
-  const loader = useRef(null);
 
-  const { produtos, isLoading, error } = useProdutos(categoria);
-
+  const { produtos } = useProdutos(categoria);
   const searchParams = useSearchParams();
-
-  useEffect(() => {
-    setVisibleCount(QTD_PRODUTOS_VISIVEIS);
-  }, [QTD_PRODUTOS_VISIVEIS]);
 
   useEffect(() => {
     const categoriaParam = searchParams.get("categoria");
 
     if (categoriaParam && categoriaParam.trim() !== "") {
       setCategoria(categoriaParam);
-      setVisibleCount(QTD_PRODUTOS_VISIVEIS);
     } else {
       setCategoria("");
     }
@@ -53,7 +40,7 @@ export default function ShopPage() {
       case "most-popular":
         break;
       case "low-price":
-        produtos.sort((a, b) => a.price - b.price);
+        produtos?.sort((a, b) => a.price - b.price);
         break;
       case "high-price":
         produtos.sort((a, b) => b.price - a.price);
@@ -62,32 +49,6 @@ export default function ShopPage() {
         break;
     }
   }, [produtos, ordenar]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const target = entries[0];
-        if (target.isIntersecting) {
-          setTimeout(() => {
-            setVisibleCount((prev) => prev + QTD_PRODUTOS_VISIVEIS);
-          }, 500);
-        }
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.5,
-      }
-    );
-
-    if (loader.current) {
-      observer.observe(loader.current);
-    }
-
-    return () => {
-      if (loader.current) observer.unobserve(loader.current);
-    };
-  }, [produtos.length]);
 
   return (
     <main className="pb-20">
@@ -131,17 +92,7 @@ export default function ShopPage() {
                 <hr className="h-[1px] border-t-black/10 mb-5 sm:mb-6" />
                 <BreadcrumbShop />
                 <div className="flex md:space-x-5 items-start">
-                  <ScrollInfinito
-                    loaderRef={loader}
-                    loading={visibleCount < produtos.length}
-                  >
-                    <div className="w-full grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-                      {produtos.slice(0, visibleCount).map((product) => (
-                        <ProductCard key={product.id} data={product} />
-                      ))}
-                    </div>
-                    <hr className="border-t-black/10" />
-                  </ScrollInfinito>
+                  <ScrollInfinito initialItem={0} category={categoria} />
                 </div>
               </div>
             </main>
