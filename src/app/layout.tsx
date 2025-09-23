@@ -7,10 +7,21 @@ import Footer from "@/components/layout/Footer";
 import HolyLoader from "holy-loader";
 import Providers from "./providers";
 import { nameStore } from "@/const/name";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: nameStore,
-  description: "Loja de joias e acessórios",
+  description:
+    "Eternize seus momentos com as joias mais refinadas de Alagoas. Alianças, anéis e colares em ouro 18k para celebrar o amor. Conheça nossa coleção.",
+  keywords: [
+    "aliança ouro 18k maceió",
+    "aliança de casamento alagoas",
+    "aliança dourada maceió",
+    "aliança feminina ouro 18k",
+    "aliança masculina ouro",
+    "comprar aliança maceió",
+    "melhor joalheria para alianças maceió",
+  ],
 };
 
 export const viewport: Viewport = {
@@ -32,6 +43,7 @@ export default function RootLayout({
           {children}
         </Providers>
         <Footer />
+        <SpeedInsights />
       </body>
     </html>
   );
