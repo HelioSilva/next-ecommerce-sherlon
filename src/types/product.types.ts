@@ -3,11 +3,15 @@ export type Discount = {
   percentage: number;
 };
 
+export type ImagemAdicional = {
+  imagem: string;
+};
+
 export type Product = {
   id: number;
   title: string;
   srcUrl: string;
-  gallery?: string[];
+  gallery?: ImagemAdicional[];
   price: number;
   discount: Discount;
   rating: number;

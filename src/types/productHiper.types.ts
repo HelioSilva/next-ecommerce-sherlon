@@ -1,3 +1,7 @@
+type ImagemAdicional = {
+  imagem: string;
+};
+
 export type ProdutoHiper = {
   altura: number;
   ativo: boolean;
@@ -11,7 +15,7 @@ export type ProdutoHiper = {
   grade: boolean;
   id: string;
   imagem: string;
-  imagensAdicionais: string[];
+  imagensAdicionais: ImagemAdicional[];
   largura: number;
   marca: string | null;
   ncm: string;

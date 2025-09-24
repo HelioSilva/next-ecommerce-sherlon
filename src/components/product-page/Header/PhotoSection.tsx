@@ -19,10 +19,10 @@ const PhotoSection = ({ data }: { data: Product }) => {
               key={index}
               type="button"
               className="bg-[#F0EEED] rounded-[13px] xl:rounded-[20px] w-full max-w-[111px] xl:max-w-[152px] max-h-[106px] xl:max-h-[167px] xl:min-h-[167px] aspect-square overflow-hidden"
-              onClick={() => setSelected(photo)}
+              onClick={() => setSelected(photo.imagem)}
             >
               <Image
-                src={photo}
+                src={photo.imagem}
                 width={152}
                 height={167}
                 className="rounded-md w-full h-full object-cover hover:scale-110 transition-all duration-500"
@@ -40,9 +40,11 @@ const PhotoSection = ({ data }: { data: Product }) => {
           <Badge variant="destructive" className="absolute top-3 left-3">
             Produto esgotado
           </Badge>
-        ) : (<Badge variant="secondary" className="absolute top-3 left-3">
-          Vendido por {data.unitOfMeasure}
-        </Badge>)}
+        ) : (
+          <Badge variant="secondary" className="absolute top-3 left-3">
+            Vendido por {data.unitOfMeasure}
+          </Badge>
+        )}
         <Zoom>
           <Image
             src={selected}
