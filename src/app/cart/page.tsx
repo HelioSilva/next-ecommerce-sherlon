@@ -19,9 +19,7 @@ import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-import {
-  clearCart
-} from "@/lib/features/carts/cartsSlice";
+import { clearCart } from "@/lib/features/carts/cartsSlice";
 
 export default function CartPage() {
   const dispatch = useAppDispatch();
@@ -77,7 +75,6 @@ export default function CartPage() {
     const mensagemTexto = MontarMensagemWA();
 
     dispatch(clearCart());
-
 
     window.location.href = enviarMensagemWhatsApp(
       process.env.NEXT_PUBLIC_NUM_WHATSAPP_RECEBE_PEDIDO || "",
@@ -208,9 +205,9 @@ export default function CartPage() {
                   <div className="text-justify text-black/60">
                     <p>
                       Para compras no atacado, oferecemos{" "}
-                      <strong>50% de desconto</strong> sobre o valor total. Após
-                      o envio do pedido, nossa equipe entrará em contato para
-                      confirmar as informações e aplicar o desconto
+                      <strong>até 50% de desconto</strong> sobre o valor total.
+                      Após o envio do pedido, nossa equipe entrará em contato
+                      para confirmar as informações e aplicar o desconto
                       correspondente.
                     </p>
                   </div>
