@@ -58,6 +58,12 @@ export const cartsSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    clearCart: (state) => {
+      state.cart = null;
+      state.totalPrice = 0;
+      state.adjustedTotalPrice = 0;
+      state.action = null;
+    },
     addToCart: (state, action: PayloadAction<CartItem>) => {
       // if cart is empty then add
       if (state.cart === null) {
@@ -197,6 +203,6 @@ export const cartsSlice = createSlice({
   },
 });
 
-export const { addToCart, removeCartItem, remove } = cartsSlice.actions;
+export const { addToCart, removeCartItem, remove, clearCart  } = cartsSlice.actions;
 
 export default cartsSlice.reducer;

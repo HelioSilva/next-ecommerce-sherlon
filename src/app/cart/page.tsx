@@ -14,13 +14,17 @@ import { FaArrowRight } from "react-icons/fa6";
 import { TbBasketExclamation } from "react-icons/tb";
 import React, { useState } from "react";
 import { RootState } from "@/lib/store";
-import { useAppSelector } from "@/lib/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks/redux";
 import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import {
+  clearCart
+} from "@/lib/features/carts/cartsSlice";
 
 export default function CartPage() {
+  const dispatch = useAppDispatch();
   const { cart, totalPrice, adjustedTotalPrice } = useAppSelector(
     (state: RootState) => state.carts
   );
@@ -70,9 +74,14 @@ export default function CartPage() {
       return;
     }
 
+    const mensagemTexto = MontarMensagemWA();
+
+    dispatch(clearCart());
+
+
     window.location.href = enviarMensagemWhatsApp(
       process.env.NEXT_PUBLIC_NUM_WHATSAPP_RECEBE_PEDIDO || "",
-      MontarMensagemWA()
+      mensagemTexto
     );
   };
 
