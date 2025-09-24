@@ -30,9 +30,14 @@ const Header = ({ data }: { data: Product }) => {
               {/* <span className="text-[#737373] md:text-lg sm:text-[32px]">Preço por unidade</span> */}
             </span>
           </div>
-          <p className="text-sm sm:text-base text-coffee/60 mb-5">
-            {"COD. "+data.id}
+          <p className="text-sm sm:text-base text-coffee/60 mb-1">
+            {"Código: " + data.id}
           </p>
+          <div className="flex items-center space-x-2.5 sm:space-x-3 mb-1">
+            <span className="text-sm sm:text-base text-coffee/60 mb-1">
+              Estoque: {data.stock <= 0 ? "0" : data.stock}
+            </span>
+          </div>
           <SizeSelection sizes={data.sizes} />
           <hr className="hidden md:block h-[1px] border-t-coffee/10 my-5" />
           <AddToCardSection data={data} />
