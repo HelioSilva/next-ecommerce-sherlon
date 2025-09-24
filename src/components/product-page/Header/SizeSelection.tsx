@@ -20,18 +20,17 @@ const SizeSelection = ({ sizes }: { sizes: string[] }) => {
     <div className="flex flex-col">
       <span className="text-sm sm:text-base text-black/60 mb-4">Tamanho</span>
       <div className="flex items-center flex-wrap lg:space-x-3">
-      <input
-        placeholder="Digite o tamanho"
-        type="text"
-        inputMode="numeric"
-        pattern="[0-9]*"
-        value={stTamanho}
-        onChange={(e) => {
-          const onlyNums = e.target.value.replace(/\D/g, "");
-          setStTamanho(onlyNums);
-        }}
-        className={"w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2"}
-      />
+        <input
+          placeholder="Digite o tamanho"
+          type="text"
+          value={stTamanho}
+          onChange={(e) => {
+            setStTamanho(e.target.value);
+          }}
+          className={
+            "w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2"
+          }
+        />
       </div>
     </div>
   );
