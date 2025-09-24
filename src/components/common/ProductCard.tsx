@@ -21,7 +21,7 @@ export default function ProductCard({ data }: ProductCardProps) {
         : price * (discount.percentage / 100))
     : price;
 
-  const isOutOfStock = false; //stock <= 0;
+  const isOutOfStock = stock <= 0;
 
   return (
     <div className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-gray-200/80 bg-white shadow-sm transition-all hover:shadow-md">
@@ -45,14 +45,14 @@ export default function ProductCard({ data }: ProductCardProps) {
             {discount.percentage > 0 ? `${discount.percentage}% OFF` : "Oferta"}
           </Badge>
         )}
-        {isOutOfStock && (
-          <Badge variant="secondary" className="absolute top-3 left-3">
-            Esgotado
+        {isOutOfStock ? (
+          <Badge variant="destructive" className="absolute top-3 left-3">
+            Produto esgotado
           </Badge>
-        )}
-        <Badge variant="secondary" className="absolute top-3 left-3">
+        ) : (<Badge variant="secondary" className="absolute top-3 left-3">
           Vendido por {data.unitOfMeasure}
-        </Badge>
+        </Badge>)}
+        
       </Link>
 
       <div className="flex flex-1 flex-col p-4">
@@ -83,7 +83,8 @@ export default function ProductCard({ data }: ProductCardProps) {
         <Button
           variant="default"
           size="sm"
-          className="mt-4 w-full border-transparent bg-coffee text-white hover:bg-coffee/90"
+          className="mt-4 w-full border-transparent bg-coffee text-white hover:bg-coffee/90 
+            disabled:bg-[#a89a95] disabled:text-white/70 disabled:cursor-not-allowed"
           disabled={isOutOfStock}
         >
           <FiShoppingCart className="mr-2 h-4 w-4" />
