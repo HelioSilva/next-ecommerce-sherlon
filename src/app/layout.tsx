@@ -8,6 +8,7 @@ import HolyLoader from "holy-loader";
 import Providers from "./providers";
 import { nameStore } from "@/const/name";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { BuscarProvider } from "@/lib/hooks/useBuscarPorDescricao";
 
 export const metadata: Metadata = {
   title: nameStore,
@@ -39,8 +40,10 @@ export default function RootLayout({
         <HolyLoader color="#868686" />
         <TopBanner />
         <Providers>
-          <TopNavbar />
-          {children}
+          <BuscarProvider>
+            <TopNavbar />
+            {children}
+          </BuscarProvider>
         </Providers>
         <Footer />
         <SpeedInsights />

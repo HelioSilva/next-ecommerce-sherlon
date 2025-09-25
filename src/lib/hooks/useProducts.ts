@@ -1,13 +1,8 @@
 import { Product } from "@/types/product.types";
 import { useMemo } from "react";
 import { ProdutoHiper } from "@/types/productHiper.types";
-import { ResponseHiper } from "@/types/responseHiper.types";
 import { converterUnidadeMedida, toCapitalCase } from "@/lib/utils";
-import {
-  DESCRICAO_TAMANHO_PADRAO,
-  ROUTE_API_LOCAL,
-} from "@/const/constantes.utils";
-import { fetcher } from "@/lib/fetcher";
+import { DESCRICAO_TAMANHO_PADRAO } from "@/const/constantes.utils";
 import { useProdutosData } from "./useProdutosData";
 
 export const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
@@ -27,7 +22,10 @@ export const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
   categoria: prod.categoria || "",
 });
 
-export function useProdutos(category?: string): {
+export function useProdutos(
+  category?: string,
+  buscarNome?: string
+): {
   produtos: Product[];
   isLoading: boolean;
   error: any;
@@ -39,36 +37,42 @@ export function useProdutos(category?: string): {
       return [];
     }
 
-    if (category && category.includes("Novidades")) {
-      return data.produtos
-        .filter((it) => it.quantidadeEmEstoque > 0)
-        .sort((a, b) => b.codigo - a.codigo) // ordena antes de map
-        .slice(0, 24) // pega os 24 mais recentes
-        .map(convertHiperProductToProduct);
-    }
+    let produtosProcessados: ProdutoHiper[] = [];
 
-    if (category && category.includes("MaisVendidos")) {
-      return data.produtos
+    if (category && category.includes("Novidades")) {
+      produtosProcessados = data.produtos
+        .filter((it) => it.quantidadeEmEstoque > 0)
+        .sort((a, b) => b.codigo - a.codigo)
+        .slice(0, 24);
+    } else if (category && category.includes("MaisVendidos")) {
+      produtosProcessados = data.produtos
         .filter(
           (prod: ProdutoHiper) =>
             prod.marca == "SHERLON" && prod.quantidadeEmEstoque > 0
         )
-        .slice(4, 8)
-        .map(convertHiperProductToProduct);
+        .slice(4, 8);
+    } else if (category && category != "") {
+      produtosProcessados = data.produtos.filter((prod: ProdutoHiper) =>
+        prod.categoria?.toLowerCase().replace(/\s+/g, "-").includes(category)
+      );
+    } else {
+      produtosProcessados = data.produtos;
     }
 
-    const produtosFiltrados = category
-      ? data.produtos.filter((prod: ProdutoHiper) =>
-          prod.categoria?.toLowerCase().replace(/\s+/g, "-").includes(category)
-        )
-      : data.produtos;
+    // Aplica o filtro de busca por nome se `buscarNome` for fornecido
+    if (buscarNome && buscarNome.trim() !== "") {
+      console.log("filtro:" + buscarNome);
+      produtosProcessados = produtosProcessados.filter((prod) =>
+        prod.nome.toLowerCase().includes(buscarNome.toLowerCase())
+      );
+      console.log(produtosProcessados.length);
+    }
 
-    return produtosFiltrados
-      ? produtosFiltrados
-          .filter((prod: ProdutoHiper) => prod.quantidadeEmEstoque > 0)
-          .map((prod: ProdutoHiper) => convertHiperProductToProduct(prod))
-      : [];
-  }, [data, category]);
+    // Filtro final de estoque e conversão para o tipo Product
+    return produtosProcessados
+      .filter((prod: ProdutoHiper) => prod.quantidadeEmEstoque > 0)
+      .map(convertHiperProductToProduct);
+  }, [data, category, buscarNome]);
 
   return {
     produtos,

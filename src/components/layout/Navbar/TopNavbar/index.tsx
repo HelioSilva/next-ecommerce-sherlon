@@ -17,6 +17,7 @@ import ResTopNavbar from "./ResTopNavbar";
 import CartBtn from "./CartBtn";
 import { nameStore } from "@/const/name";
 import { useCategories } from "@/lib/hooks/useCategories";
+import { useBuscarPorDescricao } from "@/lib/hooks/useBuscarPorDescricao";
 
 type ItemCategoria = {
   id: number;
@@ -26,6 +27,7 @@ type ItemCategoria = {
 };
 
 const TopNavbar = () => {
+  const { setDescricao } = useBuscarPorDescricao();
   const { categorias } = useCategories();
 
   const getCategorias = (): ItemCategoria[] => {
@@ -70,6 +72,7 @@ const TopNavbar = () => {
             name="search"
             placeholder="Buscar produtos..."
             className="bg-transparent placeholder:text-black/40"
+            onChange={(e) => setDescricao(e.target.value)}
           />
         </InputGroup>
         <div className="flex items-center ">
