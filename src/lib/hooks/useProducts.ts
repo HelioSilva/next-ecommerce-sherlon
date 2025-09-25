@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import { Product } from "@/types/product.types";
+import { useMemo } from "react";
 import { ProdutoHiper } from "@/types/productHiper.types";
 import { ResponseHiper } from "@/types/responseHiper.types";
 import { converterUnidadeMedida, toCapitalCase } from "@/lib/utils";
@@ -17,7 +18,7 @@ export const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
   gallery: prod.imagensAdicionais.length > 0 ? prod.imagensAdicionais : [],
   discount: { amount: 0, percentage: 0 },
   rating: 4.5,
-  stock: prod.quantidadeEmEstoque ?? 0,
+  stock: prod.quantidadeEmEstoque,
   sizes:
     prod.descricao && prod.descricao.split(",").length > 1
       ? prod.descricao.split(",")
@@ -40,44 +41,43 @@ export function useProdutos(category?: string): {
     }
   );
 
-  if (category && category.includes("Novidades")) {
-    return {
-      produtos: data?.produtos
-        ? data.produtos
-            .sort((a, b) => b.codigo - a.codigo)
-            .slice(0, 24)
-            .map(convertHiperProductToProduct)
-            .slice(-24)
-        : [],
-      isLoading,
-      error,
-    };
-  }
+  const produtos = useMemo(() => {
+    if (!data?.produtos) {
+      return [];
+    }
 
-  if (category && category.includes("MaisVendidos")) {
-    return {
-      produtos: data?.produtos
-        ? data.produtos
-            .filter((prod: ProdutoHiper) => prod.marca == "SHERLON")
-            .map(convertHiperProductToProduct)
-            .slice(4, 8)
-        : [],
-      isLoading,
-      error,
-    };
-  }
+    if (category && category.includes("Novidades")) {
+      return data.produtos
+        .filter((it) => it.quantidadeEmEstoque > 0)
+        .sort((a, b) => b.codigo - a.codigo) // ordena antes de map
+        .slice(0, 24) // pega os 24 mais recentes
+        .map(convertHiperProductToProduct);
+    }
 
-  const produtosFiltrados = category
-    ? data?.produtos.filter((prod: ProdutoHiper) =>
-        prod.categoria?.toLowerCase().replace(/\s+/g, "-").includes(category)
-      )
-    : data?.produtos;
+    if (category && category.includes("MaisVendidos")) {
+      return data.produtos
+        .filter(
+          (prod: ProdutoHiper) =>
+            prod.marca == "SHERLON" && prod.quantidadeEmEstoque > 0
+        )
+        .slice(4, 8)
+        .map(convertHiperProductToProduct);
+    }
 
-  const produtos: Product[] = produtosFiltrados
-    ? produtosFiltrados.map((prod: ProdutoHiper) =>
-        convertHiperProductToProduct(prod)
-      )
-    : [];
+    const produtosFiltrados = category
+      ? data.produtos.filter((prod: ProdutoHiper) =>
+          prod.categoria?.toLowerCase().replace(/\s+/g, "-").includes(category)
+        )
+      : data.produtos;
+
+    console.log(produtosFiltrados);
+
+    return produtosFiltrados
+      ? produtosFiltrados
+          .filter((prod: ProdutoHiper) => prod.quantidadeEmEstoque > 0)
+          .map((prod: ProdutoHiper) => convertHiperProductToProduct(prod))
+      : [];
+  }, [data, category]);
 
   return {
     produtos,

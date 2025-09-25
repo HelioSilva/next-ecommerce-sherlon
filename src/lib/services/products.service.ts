@@ -21,10 +21,20 @@ export async function serviceGetProducts(category?: string): Promise<{
 
   const data = await res.json();
 
+  if (!data?.produtos) {
+    return {
+      produtos: [],
+      maisVendidos: [],
+      novidades: [],
+    };
+  }
+
   if (category) {
     return {
-      produtos: data?.produtos.filter((prod: ProdutoHiper) =>
-        prod.categoria?.toLowerCase().replace(/\s+/g, "-").includes(category)
+      produtos: data.produtos.filter(
+        (prod: ProdutoHiper) =>
+          prod.quantidadeEmEstoque > 0 &&
+          prod.categoria?.toLowerCase().replace(/\s+/g, "-").includes(category)
       ),
       maisVendidos: [],
       novidades: [],
@@ -32,19 +42,20 @@ export async function serviceGetProducts(category?: string): Promise<{
   }
 
   return {
-    produtos: data?.produtos
-      ? data.produtos.map(convertHiperProductToProduct)
-      : [],
-    novidades: data?.produtos
-      ? data.produtos
-          .sort((a: any, b: any) => b.codigo - a.codigo)
-          .slice(0, 24)
-          .map(convertHiperProductToProduct)
-          .slice(-24)
-      : [],
+    produtos: data.produtos
+      .filter((prod: ProdutoHiper) => prod.quantidadeEmEstoque > 0)
+      .map(convertHiperProductToProduct),
+    novidades: data.produtos
+      .filter((prod: ProdutoHiper) => prod.quantidadeEmEstoque > 0)
+      .sort((a: any, b: any) => b.codigo - a.codigo)
+      .slice(0, 24)
+      .map(convertHiperProductToProduct),
     maisVendidos: data?.produtos
       ? data.produtos
-          .filter((prod: ProdutoHiper) => prod.marca == "SHERLON")
+          .filter(
+            (prod: ProdutoHiper) =>
+              prod.marca == "SHERLON" && prod.quantidadeEmEstoque > 0
+          )
           .map(convertHiperProductToProduct)
           .slice(4, 24)
       : [],
