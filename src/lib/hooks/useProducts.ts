@@ -1,4 +1,3 @@
-import useSWR from "swr";
 import { Product } from "@/types/product.types";
 import { useMemo } from "react";
 import { ProdutoHiper } from "@/types/productHiper.types";
@@ -9,6 +8,7 @@ import {
   ROUTE_API_LOCAL,
 } from "@/const/constantes.utils";
 import { fetcher } from "@/lib/fetcher";
+import { useProdutosData } from "./useProdutosData";
 
 export const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
   id: prod.codigo,
@@ -24,6 +24,7 @@ export const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
       ? prod.descricao.split(",")
       : [DESCRICAO_TAMANHO_PADRAO],
   unitOfMeasure: converterUnidadeMedida(prod.unidade),
+  categoria: prod.categoria || "",
 });
 
 export function useProdutos(category?: string): {
@@ -31,15 +32,7 @@ export function useProdutos(category?: string): {
   isLoading: boolean;
   error: any;
 } {
-  const { data, error, isLoading } = useSWR<ResponseHiper>(
-    ROUTE_API_LOCAL,
-    fetcher,
-    {
-      refreshInterval: 600000, // 10 minutos
-      dedupingInterval: 600000, // evita refetch duplicado por 10 minutos
-      revalidateOnFocus: false, // não atualiza só porque voltou para a aba
-    }
-  );
+  const { data, error, isLoading } = useProdutosData();
 
   const produtos = useMemo(() => {
     if (!data?.produtos) {
@@ -69,8 +62,6 @@ export function useProdutos(category?: string): {
           prod.categoria?.toLowerCase().replace(/\s+/g, "-").includes(category)
         )
       : data.produtos;
-
-    console.log(produtosFiltrados);
 
     return produtosFiltrados
       ? produtosFiltrados

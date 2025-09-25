@@ -5,6 +5,11 @@ import { useProdutos } from "@/lib/hooks/useProducts";
 import ProductCard from "../common/ProductCard";
 import Loading from "../common/Loading";
 
+const QTD_PRODUTOS_VISIVEIS = parseInt(
+  process.env.NEXT_PUBLIC_PRODUTOS_VISIVEIS_A_CADA_LOADING ?? "20",
+  10
+);
+
 const ScrollInfinito = ({
   initialItem,
   category,
@@ -14,17 +19,12 @@ const ScrollInfinito = ({
 }) => {
   const { produtos, isLoading } = useProdutos(category);
 
-  const QTD_PRODUTOS_VISIVEIS = parseInt(
-    process.env.NEXT_PUBLIC_PRODUTOS_VISIVEIS_A_CADA_LOADING ?? "20",
-    10
-  );
-
   const [visibleCount, setVisibleCount] = useState(QTD_PRODUTOS_VISIVEIS);
   const loader = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setVisibleCount(QTD_PRODUTOS_VISIVEIS);
-  }, [category, QTD_PRODUTOS_VISIVEIS]);
+  }, [category]);
 
   useEffect(() => {
     if (!loader.current) return;
@@ -51,7 +51,7 @@ const ScrollInfinito = ({
     return () => {
       observer.disconnect();
     };
-  }, [produtos.length, QTD_PRODUTOS_VISIVEIS]);
+  }, [produtos]);
 
   return (
     <div className="flex flex-col w-full space-y-5">

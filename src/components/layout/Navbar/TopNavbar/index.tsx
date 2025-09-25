@@ -3,7 +3,7 @@
 import { cn, toCapitalCase } from "@/lib/utils";
 import { integralCF } from "@/styles/fonts";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavMenu } from "../navbar.types";
 import { MenuList } from "./MenuList";
 import {
@@ -18,56 +18,31 @@ import CartBtn from "./CartBtn";
 import { nameStore } from "@/const/name";
 import { useCategories } from "@/lib/hooks/useCategories";
 
-let data: NavMenu = [
-  {
-    id: 1,
-    label: "Categorias",
-    type: "MenuList",
-    children: [],
-  },
-  // {
-  //   id: 2,
-  //   type: "MenuItem",
-  //   label: "On Sale",
-  //   url: "/shop#on-sale",
-  //   children: [],
-  // },
-  {
-    id: 3,
-    type: "MenuItem",
-    label: "Novidades",
-    url: "/shop?categoria=Novidades",
-    children: [],
-  },
-  // {
-  //   id: 4,
-  //   type: "MenuItem",
-  //   label: "Brands",
-  //   url: "/shop#brands",
-  //   children: [],
-  // },
-];
+type ItemCategoria = {
+  id: number;
+  label: string;
+  url: string;
+  description: string;
+};
 
 const TopNavbar = () => {
-  const { categorias, isLoading, error } = useCategories();
+  const { categorias } = useCategories();
 
-  console.log("Categorias disponíveis:", categorias);
-
-  const categoriasMapeadas = categorias.map((cat, index) => ({
-    id: index,
-    label: toCapitalCase(cat),
-    url: `/shop?categoria=${cat.toLowerCase().replace(/\s+/g, "-")}`,
-    description: "",
-  }));
-
-  data[0].children = categoriasMapeadas;
+  const getCategorias = (): ItemCategoria[] => {
+    return categorias.map((cat, index) => ({
+      id: index,
+      label: toCapitalCase(cat),
+      url: `/shop?categoria=${cat.toLowerCase().replace(/\s+/g, "-")}`,
+      description: "",
+    }));
+  };
 
   return (
     <nav className=" sticky top-0 bg-white z-20">
       <div className="flex relative max-w-frame mx-auto items-center justify-between md:justify-start py-5 md:py-6 px-4 xl:px-0">
         <div className="flex items-center ">
           <div className="block md:hidden mr-3 ">
-            <ResTopNavbar data={data} />
+            {/* <ResTopNavbar data={data} /> */}
           </div>
           <Link href="/" className="mr-3 md:mr-20  md:w-[300px]  ">
             <img src="/images/logo-pgn-ini.svg" alt="" />
@@ -75,16 +50,8 @@ const TopNavbar = () => {
         </div>
         <NavigationMenu className="text-2xl hidden md:flex mr-2 lg:mr-7">
           <NavigationMenuList>
-            {data.map((item) => (
-              <React.Fragment key={item.id}>
-                {item.type === "MenuItem" && (
-                  <MenuItem label={item.label} url={item.url} />
-                )}
-                {item.type === "MenuList" && (
-                  <MenuList data={item.children} label={item.label} />
-                )}
-              </React.Fragment>
-            ))}
+            <MenuList data={getCategorias()} label={"Categorias"} />
+            <MenuItem label={"Novidades"} url={"/shop?categoria=Novidades"} />
           </NavigationMenuList>
         </NavigationMenu>
         <InputGroup className=" hidden md:flex bg-[#F0F0F0] mr-3 lg:mr-10">

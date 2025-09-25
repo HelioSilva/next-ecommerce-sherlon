@@ -13,7 +13,7 @@ import MobileFilters from "@/components/shop-page/filters/MobileFilters";
 import Filters from "@/components/shop-page/filters";
 import { FiSliders } from "react-icons/fi";
 import { useProdutos } from "@/lib/hooks/useProducts";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { toCapitalCase } from "@/lib/utils";
 import ScrollInfinito from "@/components/template/ScrollInfinito";
@@ -31,24 +31,26 @@ export default function ShopPage() {
     if (categoriaParam && categoriaParam.trim() !== "") {
       setCategoria(categoriaParam);
     } else {
-      setCategoria("");
+      if (categoria !== "") {
+        setCategoria("");
+      }
     }
   }, [searchParams]);
 
-  useEffect(() => {
-    switch (ordenar) {
-      case "most-popular":
-        break;
-      case "low-price":
-        produtos?.sort((a, b) => a.price - b.price);
-        break;
-      case "high-price":
-        produtos.sort((a, b) => b.price - a.price);
-        break;
-      default:
-        break;
-    }
-  }, [produtos, ordenar]);
+  // useEffect(() => {
+  //   switch (ordenar) {
+  //     case "most-popular":
+  //       break;
+  //     case "low-price":
+  //       produtos?.sort((a, b) => a.price - b.price);
+  //       break;
+  //     case "high-price":
+  //       produtos.sort((a, b) => b.price - a.price);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }, [produtos, ordenar]);
 
   return (
     <main className="pb-20">
