@@ -5,6 +5,7 @@ import DressStyleSection from "@/components/shop-page/filters/DressStyleSection"
 import PriceSection from "@/components/shop-page/filters/PriceSection";
 import SizeSection from "@/components/shop-page/filters/SizeSection";
 import { Button } from "@/components/ui/button";
+import { useBuscarPorDescricao } from "@/lib/hooks/useBuscarPorDescricao";
 
 const Filters = () => {
   return (
@@ -19,12 +20,15 @@ const Filters = () => {
       <SizeSection /> */}
       {/* <hr className="border-t-black/10" />
       <DressStyleSection /> */}
-      <Button
+      {/* <Button
         type="button"
         className="bg-[#685048] w-full rounded-full text-sm font-medium py-4 h-12"
+        onClick={() => {
+          aplicarFiltro();
+        }}
       >
         Aplicar filtro
-      </Button>
+      </Button> */}
     </>
   );
 };

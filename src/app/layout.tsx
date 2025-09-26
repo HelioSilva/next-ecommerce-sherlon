@@ -37,16 +37,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={satoshi.className}>
-        <HolyLoader color="#868686" />
-        <TopBanner />
-        <Providers>
-          <BuscarProvider>
+        <BuscarProvider>
+          <HolyLoader color="#868686" />
+          <TopBanner />
+          <Providers>
             <TopNavbar />
             {children}
-          </BuscarProvider>
-        </Providers>
-        <Footer />
-        <SpeedInsights />
+          </Providers>
+          <Footer />
+          <SpeedInsights />
+        </BuscarProvider>
       </body>
     </html>
   );

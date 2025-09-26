@@ -1,20 +1,19 @@
-"use client";
-
 import BreadcrumbProduct from "@/components/product-page/BreadcrumbProduct";
 import Header from "@/components/product-page/Header";
 import Tabs from "@/components/product-page/Tabs";
-import { useProdutos } from "@/lib/hooks/useProducts";
-import Loading from "@/components/common/Loading";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { serviceGetProducts } from "@/lib/services/products.service";
+import { ResponseDataAPI } from "@/types/responseDataAPI.types";
 
-export default function ProductPage({
+export default async function ProductPage({
   params,
 }: {
   params: { slug: string[] };
 }) {
-  const { produtos, isLoading, error } = useProdutos();
-  const productData = produtos.find(
+  const data: ResponseDataAPI = await serviceGetProducts();
+
+  const productData = data.produtos.find(
     (product) => product.id === Number(params.slug[0])
   );
 
@@ -40,7 +39,7 @@ export default function ProductPage({
         )}
 
         <section className="mb-11">
-          {isLoading && <Loading />}
+          {/* {isLoading && <Loading />} */}
           {productData != undefined && <Header data={productData} />}
         </section>
         <Tabs />

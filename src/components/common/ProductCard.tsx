@@ -49,10 +49,11 @@ export default function ProductCard({ data }: ProductCardProps) {
           <Badge variant="destructive" className="absolute top-3 left-3">
             Produto esgotado
           </Badge>
-        ) : (<Badge variant="secondary" className="absolute top-3 left-3">
-          Vendido por {data.unitOfMeasure}
-        </Badge>)}
-        
+        ) : (
+          <Badge variant="secondary" className="absolute top-3 left-3">
+            Vendido por {data.unitOfMeasure}
+          </Badge>
+        )}
       </Link>
 
       <div className="flex flex-1 flex-col p-4">
