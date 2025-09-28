@@ -26,32 +26,15 @@ export const ProductCategoryPage = ({
   data: ResponseDataAPI;
   nomeCategoria: string;
 }) => {
-  const { descricao, setDescricao, vlorMin, vlorMax, setResetFiltroPreco } =
-    useBuscarPorDescricao();
+  const { vlorMin, vlorMax, setResetFiltroPreco } = useBuscarPorDescricao();
   const [produtos, setProdutos] = useState<Product[]>([]);
   const [ordenar, setOrdenar] = useState<string>("most-popular");
 
   useEffect(() => {
-    setDescricao("");
     setOrdenar("most-popular");
     setProdutos(data.produtos);
     setResetFiltroPreco(true);
   }, [data]);
-
-  useEffect(() => {
-    if (descricao.trim() == "") {
-      setProdutos(data.produtos);
-      return;
-    }
-
-    setProdutos(
-      data.produtos.filter(
-        (prod) =>
-          prod.title.toLowerCase().includes(descricao.toLowerCase()) ||
-          prod.id.toString().toLowerCase().includes(descricao.toLowerCase())
-      )
-    );
-  }, [descricao]);
 
   useEffect(() => {
     switch (ordenar) {

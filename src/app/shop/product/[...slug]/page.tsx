@@ -11,7 +11,7 @@ export default async function ProductPage({
 }: {
   params: { slug: string[] };
 }) {
-  const data: ResponseDataAPI = await serviceGetProducts();
+  const data: ResponseDataAPI = await serviceGetProducts({});
 
   const productData = data.produtos.find(
     (product) => product.id === Number(params.slug[0])

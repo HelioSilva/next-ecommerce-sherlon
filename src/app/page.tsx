@@ -1,12 +1,16 @@
 import { serviceGetProducts } from "@/lib/services/products.service";
 import { ProductHomePage } from "@/components/product-page/ProductHomePage";
+import { ResponseDataAPI } from "@/types/responseDataAPI.types";
 
-export default async function Home() {
-  const data = await serviceGetProducts();
+export interface PageProps {
+  searchParams: { busca?: string };
+}
 
-  return (
-    <>
-      <ProductHomePage data={data} />
-    </>
+export default async function Home({ searchParams }: PageProps) {
+  const { busca } = searchParams;
+
+  const data: ResponseDataAPI = await serviceGetProducts(
+    busca ? { pesquisaProduto: busca } : {}
   );
+  return <ProductHomePage data={data} txtPesquisa={busca} />;
 }

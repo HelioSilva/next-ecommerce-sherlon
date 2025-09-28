@@ -7,7 +7,7 @@ interface PageProps {
 
 export default async function ShopPage({ searchParams }: PageProps) {
   const nomeCategoria = searchParams.categoria || "";
-  const data = await serviceGetProducts(nomeCategoria);
+  const data = await serviceGetProducts({ category: nomeCategoria });
 
   console.log(data.produtos.length + " produtos na categoria.");
 

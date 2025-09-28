@@ -51,9 +51,13 @@ export async function serviceGetCategories(): Promise<string[]> {
   );
 }
 
-export async function serviceGetProducts(
-  category?: string
-): Promise<ResponseDataAPI> {
+export async function serviceGetProducts({
+  category,
+  pesquisaProduto,
+}: {
+  category?: string;
+  pesquisaProduto?: string;
+}): Promise<ResponseDataAPI> {
   const res = await fetch("https://sherlonjoias.com.br/" + ROUTE_API_LOCAL, {
     next: { revalidate: 600 }, // ISR -> revalida a cada 10 minutos
   });
@@ -103,6 +107,23 @@ export async function serviceGetProducts(
               .replace(/\s+/g, "-")
               .includes(category)
         )
+        .map(convertHiperProductToProduct),
+      maisVendidos: [],
+      novidades: [],
+      isLoading: false,
+      error: null,
+    };
+  }
+
+  if (pesquisaProduto && pesquisaProduto.trim() != "") {
+    return {
+      produtos: data.produtos
+        .filter(
+          (prod: ProdutoHiper) =>
+            prod.quantidadeEmEstoque > 0 &&
+            prod.nome?.toLowerCase().includes(pesquisaProduto.toLowerCase())
+        )
+        .sort((a: any, b: any) => b.codigo - a.codigo)
         .map(convertHiperProductToProduct),
       maisVendidos: [],
       novidades: [],

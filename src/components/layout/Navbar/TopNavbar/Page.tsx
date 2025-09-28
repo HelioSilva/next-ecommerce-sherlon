@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { MenuList } from "./MenuList";
 import {
   NavigationMenu,
@@ -12,15 +12,28 @@ import Image from "next/image";
 import InputGroup from "@/components/ui/input-group";
 import ResTopNavbar from "./ResTopNavbar";
 import CartBtn from "./CartBtn";
-import { useBuscarPorDescricao } from "@/lib/hooks/useBuscarPorDescricao";
 import { ItemCategoria } from "@/types/itemCategories.types";
+import { useRouter } from "next/navigation";
 
 export const TopNavBarPage = ({
   categories,
 }: {
   categories: ItemCategoria[];
 }) => {
-  const { setDescricao } = useBuscarPorDescricao();
+  const router = useRouter();
+  const [txtFiltro, setTextFiltro] = useState("");
+
+  const realizarPesquisa = () => {
+    if (txtFiltro.trim() != "") router.push(`/?busca=${txtFiltro}`);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") realizarPesquisa();
+  };
+
+  const handleMouseClick = () => {
+    realizarPesquisa();
+  };
 
   return (
     <nav className=" sticky top-0 bg-white z-20">
@@ -66,6 +79,7 @@ export const TopNavBarPage = ({
               width={20}
               alt="search"
               className="min-w-5 min-h-5"
+              onClick={handleMouseClick}
             />
           </InputGroup.Text>
           <InputGroup.Input
@@ -73,7 +87,8 @@ export const TopNavBarPage = ({
             name="search"
             placeholder="Buscar produtos..."
             className="bg-transparent placeholder:text-black/40"
-            onChange={(e) => setDescricao(e.target.value)}
+            onChange={(e) => setTextFiltro(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </InputGroup>
         <div className="flex items-center ">

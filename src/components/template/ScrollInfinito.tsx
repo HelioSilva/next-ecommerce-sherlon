@@ -12,8 +12,6 @@ const QTD_PRODUTOS_VISIVEIS = parseInt(
 );
 
 const ScrollInfinito = ({ produtos }: { produtos: Product[] }) => {
-  const { descricao } = useBuscarPorDescricao();
-
   const [visibleCount, setVisibleCount] = useState(QTD_PRODUTOS_VISIVEIS);
   const loader = useRef<HTMLDivElement | null>(null);
 

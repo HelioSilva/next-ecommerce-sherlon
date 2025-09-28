@@ -1,47 +1,35 @@
 "use client";
 
 import { ResponseDataAPI } from "@/types/responseDataAPI.types";
-import ProductCard from "@/components/common/ProductCard";
 import ProductListSec from "@/components/common/ProductListSec";
 import Header from "@/components/homepage/Header";
 import ScrollInfinito from "@/components/template/ScrollInfinito";
 import * as motion from "framer-motion/client";
 import { cn } from "@/lib/utils";
 import { integralCF } from "@/styles/fonts";
-import { useBuscarPorDescricao } from "@/lib/hooks/useBuscarPorDescricao";
 import { useEffect, useState } from "react";
 import { Product } from "@/types/product.types";
+import { ProductNotFound } from "./ProductNotFound";
 
-export const ProductHomePage = ({ data }: { data: ResponseDataAPI }) => {
-  const { descricao } = useBuscarPorDescricao();
+export const ProductHomePage = ({
+  data,
+  txtPesquisa,
+}: {
+  data: ResponseDataAPI;
+  txtPesquisa?: string;
+}) => {
   const [produtos, setProdutos] = useState<Product[]>([]);
 
   useEffect(() => {
     setProdutos(data.produtos);
   }, [data]);
 
-  useEffect(() => {
-    if (descricao.trim() == "") {
-      setProdutos(data.produtos);
-      return;
-    }
-
-    setProdutos(
-      data.produtos.filter(
-        (prod) =>
-          prod.title.toLowerCase().includes(descricao.toLowerCase()) ||
-          prod.id.toString().toLowerCase().includes(descricao.toLowerCase())
-      )
-    );
-  }, [descricao]);
-
   return (
     <>
-      <Header />
+      {!txtPesquisa && <Header />}
 
-      {/* <Brands /> */}
       <main className="bg-[#FFF] text-[#685048] py-[50px] sm:py-[72px]">
-        {descricao.trim() == "" && (
+        {!txtPesquisa && (
           <>
             {data.novidades.length > 0 && (
               <ProductListSec
@@ -64,6 +52,8 @@ export const ProductHomePage = ({ data }: { data: ResponseDataAPI }) => {
             </div>
           </>
         )}
+
+        {data.produtos.length == 0 && <ProductNotFound />}
         <div className="mb-[50px] sm:mb-20">
           <div className="max-w-frame mx-auto px-4 xl:px-0">
             <div className="flex md:space-x-5 items-start">
