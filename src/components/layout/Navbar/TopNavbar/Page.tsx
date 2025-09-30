@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MenuList } from "./MenuList";
 import {
   NavigationMenu,
@@ -14,6 +14,7 @@ import ResTopNavbar from "./ResTopNavbar";
 import CartBtn from "./CartBtn";
 import { ItemCategoria } from "@/types/itemCategories.types";
 import { useRouter } from "next/navigation";
+import { useBuscarPorDescricao } from "@/lib/hooks/useBuscarPorDescricao";
 
 export const TopNavBarPage = ({
   categories,
@@ -24,6 +25,7 @@ export const TopNavBarPage = ({
   const [txtFiltro, setTextFiltro] = useState("");
 
   const realizarPesquisa = () => {
+    console.log("realizarPesquisa");
     if (txtFiltro.trim() != "") router.push(`/?busca=${txtFiltro}`);
   };
 
@@ -35,12 +37,30 @@ export const TopNavBarPage = ({
     realizarPesquisa();
   };
 
+  const { resetFiltroBusca, setResetFiltroBusca } = useBuscarPorDescricao();
+  useEffect(() => {
+    console.log("txtfiltro" + txtFiltro);
+    if (resetFiltroBusca == true) {
+      setTextFiltro("");
+      setResetFiltroBusca(false);
+      console.log("limpou txt");
+    }
+  }, [resetFiltroBusca]);
+
   return (
     <nav className=" sticky top-0 bg-white z-20">
-      <div className="flex relative max-w-frame mx-auto items-center justify-between md:justify-start py-5 md:py-6 px-4 xl:px-0">
-        <div className="flex items-center ">
-          <div className="block md:hidden mr-3 ">
-            {/* Menu dos dispositivos móveis */}
+      <div
+        className="
+          flex flex-col md:flex-row         
+          relative max-w-frame mx-auto
+          items-center md:items-center
+          justify-between md:justify-start
+          pt-3 md:py-6 px-4 xl:px-0
+        "
+      >
+        {/* Logo e menu mobile */}
+        <div className="flex items-center">
+          <div className="block md:hidden mr-3">
             <ResTopNavbar
               data={[
                 {
@@ -62,7 +82,11 @@ export const TopNavBarPage = ({
           <Link href="/" className="mr-3 md:mr-20  md:w-[300px]  ">
             <img src="/images/logo-pgn-ini.svg" alt="" />
           </Link>
+          <div className="block md:hidden">
+            <CartBtn />
+          </div>
         </div>
+
         {/* Menu dos dispositivos large */}
         <NavigationMenu className="text-2xl hidden md:flex mr-2 lg:mr-7">
           <NavigationMenuList>
@@ -70,49 +94,40 @@ export const TopNavBarPage = ({
             <MenuItem label={"Novidades"} url={"/shop?categoria=Novidades"} />
           </NavigationMenuList>
         </NavigationMenu>
-        <InputGroup className=" hidden md:flex bg-[#F0F0F0] mr-3 lg:mr-10">
-          <InputGroup.Text>
-            <Image
-              priority
-              src="/icons/search.svg"
-              height={20}
-              width={20}
-              alt="search"
-              className="min-w-5 min-h-5"
-              onClick={handleMouseClick}
+        <div className="w-full justify-items-center mb-2 md:justify-items-start">
+          {/* InputGroup de busca - único, responsivo */}
+          <InputGroup
+            className="
+            w-[90%]                   
+            md:w-[98%]    
+            bg-[#F0F0F0] rounded-md flex
+          "
+          >
+            <InputGroup.Input
+              type="search"
+              name="search"
+              placeholder="Buscar produtos..."
+              className="bg-transparent placeholder:text-black/40"
+              value={txtFiltro}
+              onChange={(e) => setTextFiltro(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
-          </InputGroup.Text>
-          <InputGroup.Input
-            type="search"
-            name="search"
-            placeholder="Buscar produtos..."
-            className="bg-transparent placeholder:text-black/40"
-            onChange={(e) => setTextFiltro(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
-        </InputGroup>
-        <div className="flex items-center ">
-          <Link href="/search" className="block md:hidden mr-[14px] p-1">
-            <Image
-              priority
-              src="/icons/search-black.svg"
-              height={100}
-              width={100}
-              alt="search"
-              className="max-w-[22px] max-h-[22px]"
-            />
-          </Link>
+            <InputGroup.Text>
+              <Image
+                priority
+                src="/icons/search-black.svg"
+                height={20}
+                width={20}
+                alt="search"
+                className="min-w-5 min-h-5"
+                onClick={handleMouseClick}
+              />
+            </InputGroup.Text>
+          </InputGroup>
+        </div>
+
+        <div className="hidden sm:flex ">
           <CartBtn />
-          {/* <Link href="/#signin" className="p-1">
-            <Image
-              priority
-              src="/icons/user.svg"
-              height={100}
-              width={100}
-              alt="user"
-              className="max-w-[22px] max-h-[22px]"
-            />
-          </Link> */}
         </div>
       </div>
     </nav>

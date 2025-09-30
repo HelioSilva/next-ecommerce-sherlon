@@ -12,7 +12,7 @@ import {
 import { integralCF } from "@/styles/fonts";
 import { FaArrowRight } from "react-icons/fa6";
 import { TbBasketExclamation } from "react-icons/tb";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RootState } from "@/lib/store";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/redux";
 import Link from "next/link";
@@ -20,12 +20,19 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { clearCart } from "@/lib/features/carts/cartsSlice";
+import { useBuscarPorDescricao } from "@/lib/hooks/useBuscarPorDescricao";
 
 export default function CartPage() {
   const dispatch = useAppDispatch();
   const { cart, totalPrice, adjustedTotalPrice } = useAppSelector(
     (state: RootState) => state.carts
   );
+
+  const { setResetFiltroBusca } = useBuscarPorDescricao();
+  useEffect(() => {
+    console.log("carrinho");
+    setResetFiltroBusca(true);
+  }, []);
 
   // 👉 Estados do formulário
   const [nome, setNome] = useState("");

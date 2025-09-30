@@ -121,7 +121,8 @@ export async function serviceGetProducts({
         .filter(
           (prod: ProdutoHiper) =>
             prod.quantidadeEmEstoque > 0 &&
-            prod.nome?.toLowerCase().includes(pesquisaProduto.toLowerCase())
+            (prod.nome?.toLowerCase().includes(pesquisaProduto.toLowerCase()) ||
+              prod.codigo == Number(pesquisaProduto))
         )
         .sort((a: any, b: any) => b.codigo - a.codigo)
         .map(convertHiperProductToProduct),

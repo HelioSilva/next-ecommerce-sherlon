@@ -10,6 +10,8 @@ type BuscarContextType = {
   setVlorMin: (valor: number) => void;
   vlorMax: number;
   setVlorMax: (valor: number) => void;
+  resetFiltroBusca:boolean;
+  setResetFiltroBusca: (value: boolean) => void;
 };
 
 const BuscarContext = createContext<BuscarContextType | undefined>(undefined);
@@ -18,6 +20,7 @@ export function BuscarProvider({ children }: { children: ReactNode }) {
   const [vlorMin, setVlorMin] = useState(0);
   const [vlorMax, setVlorMax] = useState(10000);
   const [resetFiltroPreco, setResetFiltroPreco] = useState(false);
+  const [resetFiltroBusca, setResetFiltroBusca] = useState(false);
 
   return (
     <BuscarContext.Provider
@@ -28,6 +31,8 @@ export function BuscarProvider({ children }: { children: ReactNode }) {
         setVlorMax,
         resetFiltroPreco,
         setResetFiltroPreco,
+        resetFiltroBusca,
+        setResetFiltroBusca
       }}
     >
       {children}
