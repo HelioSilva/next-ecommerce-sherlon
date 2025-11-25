@@ -1,4 +1,23 @@
+import fs from "fs";
+import path from "path";
+
+const CACHE_PATH = path.join(process.cwd(), "products-cache.json");
+const CACHE_TIME = 60 * 10 * 1000; // 10 min
+
 export async function GET(request: Request) {
+  const now = Date.now();
+
+  // Tenta usar o cache
+  if (fs.existsSync(CACHE_PATH)) {
+    const raw = JSON.parse(fs.readFileSync(CACHE_PATH, "utf8"));
+
+    const isFresh = now - raw.timestamp < CACHE_TIME;
+    if (isFresh) {
+      console.log("Usando cache de produtos");
+      return Response.json(raw.data);
+    }
+  }
+
   const url = new URL(request.url);
   const ponto = url.searchParams.get("pontoDeSincronizacao") ?? "";
 
@@ -45,6 +64,12 @@ export async function GET(request: Request) {
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
+
+  fs.writeFileSync(
+    CACHE_PATH,
+    JSON.stringify({ timestamp: now, data }, null, 2),
+    "utf8"
+  );
 
   return new Response(JSON.stringify(data), {
     headers: { "Content-Type": "application/json" },

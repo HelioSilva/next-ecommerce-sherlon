@@ -26,7 +26,7 @@ export const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
 
 export async function serviceGetCategories(): Promise<string[]> {
   const res = await fetch("https://sherlonjoias.com.br/" + ROUTE_API_LOCAL, {
-    next: { revalidate: 600 }, // ISR -> revalida a cada 10 minutos
+    cache: "no-store",
   });
 
   if (!res.ok) return [];
@@ -59,7 +59,7 @@ export async function serviceGetProducts({
   pesquisaProduto?: string;
 }): Promise<ResponseDataAPI> {
   const res = await fetch("https://sherlonjoias.com.br/" + ROUTE_API_LOCAL, {
-    next: { revalidate: 600 }, // ISR -> revalida a cada 10 minutos
+    cache: "no-store",
   });
 
   if (!res.ok)
