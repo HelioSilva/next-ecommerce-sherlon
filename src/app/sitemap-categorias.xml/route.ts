@@ -6,9 +6,7 @@ export async function GET() {
   // Chama sua API para buscar os produtos
   const response = await fetch(
     `https://sherlonjoias.com.br/${ROUTE_API_LOCAL}`,
-    {
-      next: { revalidate: 60 * 60 }, // revalida 1x por hora
-    }
+    { cache: "no-store" }
   );
   const responseJson: any = await response.json();
 

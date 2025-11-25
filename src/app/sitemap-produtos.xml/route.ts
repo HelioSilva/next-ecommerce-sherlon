@@ -14,7 +14,7 @@ const produtos = [
 
 export async function GET() {
   const res = await fetch(`https://sherlonjoias.com.br/${ROUTE_API_LOCAL}`, {
-    next: { revalidate: 60 * 60 },
+    cache: "no-store",
   });
 
   const responseJson: any = await res.json();
