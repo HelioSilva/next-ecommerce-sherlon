@@ -1,21 +1,13 @@
-import fs from "fs";
-import path from "path";
-
-const CACHE_PATH = path.join(process.cwd(), "products-cache.json");
-const CACHE_TIME = 60 * 10 * 1000; // 10 min
+import { redis } from "@/lib/redis";
 
 export async function GET(request: Request) {
-  const now = Date.now();
+  // 1. Tenta pegar do cache
+  console.log("Verificando cache...");
+  const cached = await redis.get("products");
 
-  // Tenta usar o cache
-  if (fs.existsSync(CACHE_PATH)) {
-    const raw = JSON.parse(fs.readFileSync(CACHE_PATH, "utf8"));
-
-    const isFresh = now - raw.timestamp < CACHE_TIME;
-    if (isFresh) {
-      console.log("Usando cache de produtos");
-      return Response.json(raw.data);
-    }
+  if (cached) {
+    console.log("Retornando do cache");
+    return Response.json(cached);
   }
 
   const url = new URL(request.url);
@@ -65,11 +57,8 @@ export async function GET(request: Request) {
     );
   }
 
-  fs.writeFileSync(
-    CACHE_PATH,
-    JSON.stringify({ timestamp: now, data }, null, 2),
-    "utf8"
-  );
+  // 3. Salva no Redis com expiração (10 minutos)
+  await redis.set("products", data, { ex: 600 });
 
   return new Response(JSON.stringify(data), {
     headers: { "Content-Type": "application/json" },
