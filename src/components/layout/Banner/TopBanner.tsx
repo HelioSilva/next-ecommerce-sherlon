@@ -18,8 +18,7 @@ const TopBanner = () => {
             type="button"
             aria-label="close banner"
           >
-            <Image
-              priority
+            <img
               src="/icons/times.svg"
               height={13}
               width={13}

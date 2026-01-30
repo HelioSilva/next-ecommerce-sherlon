@@ -113,8 +113,7 @@ export const TopNavBarPage = ({
               onKeyDown={handleKeyDown}
             />
             <InputGroup.Text>
-              <Image
-                priority
+              <img
                 src="/icons/search-black.svg"
                 height={20}
                 width={20}

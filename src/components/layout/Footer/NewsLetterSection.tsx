@@ -20,8 +20,7 @@ const NewsLetterSection = () => {
         <div className="flex flex-col w-full max-w-[349px] mx-auto">
           <InputGroup className="flex bg-white mb-[14px]">
             <InputGroup.Text>
-              <Image
-                priority
+              <img
                 src="/icons/envelope.svg"
                 height={20}
                 width={20}

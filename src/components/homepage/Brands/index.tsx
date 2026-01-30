@@ -29,15 +29,13 @@ const Brands = () => {
     <div className="bg-black">
       <div className="max-w-frame mx-auto flex flex-wrap items-center justify-center md:justify-between py-5 md:py-0 sm:px-4 xl:px-0 space-x-7">
         {brandsData.map((brand) => (
-          <Image
+          <img
             key={brand.id}
-            priority
             src={brand.srcUrl}
             height={0}
             width={0}
             alt={brand.id}
             className="h-auto w-auto max-w-[116px] lg:max-w-48 max-h-[26px] lg:max-h-9 my-5 md:my-11"
-            unoptimized
           />
         ))}
       </div>

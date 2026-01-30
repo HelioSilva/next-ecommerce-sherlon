@@ -27,8 +27,6 @@ const PhotoSection = ({ data }: { data: Product }) => {
                 height={167}
                 className="rounded-md w-full h-full object-cover hover:scale-110 transition-all duration-500"
                 alt={data.title}
-                priority
-                unoptimized
               />
             </button>
           ))}
@@ -46,14 +44,12 @@ const PhotoSection = ({ data }: { data: Product }) => {
           </Badge>
         )}
         <Zoom>
-          <Image
+          <img
             src={selected}
             width={444}
             height={530}
             className="rounded-md"
             alt={data.title}
-            priority
-            unoptimized
           />
         </Zoom>
       </div>

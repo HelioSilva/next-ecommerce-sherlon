@@ -24,8 +24,7 @@ const ResTopNavbar = ({ data }: { data: NavMenu }) => {
   return (
     <Sheet>
       <SheetTrigger asChild className="cursor-pointer">
-        <Image
-          priority
+        <img
           src="/icons/menu.svg"
           height={100}
           width={100}
