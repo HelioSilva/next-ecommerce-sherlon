@@ -1,7 +1,10 @@
 import { redis } from "@/lib/redis";
 
 export async function GET(request: Request) {
-  return []
+   return new Response(JSON.stringify([]), {
+    headers: { "Content-Type": "application/json" },
+  });
+
   // // 1. Tenta pegar do cache
   // console.log("Verificando cache...");
   // const cached = await redis.get("products");
