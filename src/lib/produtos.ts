@@ -18,6 +18,7 @@ export async function getTodosProdutosApiHiper() {
   const ApiToken = await fetch(
     `http://ms-ecommerce.hiper.com.br/api/v1/auth/gerar-token/${clientId}`,
     {
+      cache: "no-store",
       headers: {},
     }
   );
