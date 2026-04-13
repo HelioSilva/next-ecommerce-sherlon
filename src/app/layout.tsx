@@ -39,7 +39,7 @@ export default function RootLayout({
       <body className={satoshi.className}>
         <BuscarProvider>
           <HolyLoader color="#868686" />
-          <TopBanner />
+          {/* <TopBanner /> */}
           <Providers>
             <TopNavbar />
             {children}
