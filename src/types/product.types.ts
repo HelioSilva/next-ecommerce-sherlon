@@ -19,4 +19,5 @@ export type Product = {
   sizes: string[];
   unitOfMeasure: string;
   categoria: string;
+  marca: string;
 };

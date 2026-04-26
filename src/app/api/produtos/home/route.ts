@@ -1,12 +1,15 @@
-import { NextResponse } from "next/server"
-import { getTodosProdutosApiHiper } from "@/lib/produtos"
+import { NextResponse } from "next/server";
+import { syncProdutos } from "@/lib/services/syncProdutos";
 
 export async function GET() {
-  const produtos = await getTodosProdutosApiHiper()
+  console.log("GET");
 
-  if (produtos == null){
-    return NextResponse.json([])
+  const produtos = await syncProdutos();
+  console.log("Produtos encontrados: ");
+
+  if (produtos == null) {
+    return NextResponse.json([]);
   }
 
-  return NextResponse.json(produtos)
+  return NextResponse.json(produtos);
 }

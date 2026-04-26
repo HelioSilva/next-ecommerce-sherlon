@@ -1,5 +1,6 @@
 "use client";
 
+import ImageCache from "@/components/image/ImageCache";
 import { Badge } from "@/components/ui/badge";
 import { Product } from "@/types/product.types";
 import Image from "next/image";
@@ -44,12 +45,13 @@ const PhotoSection = ({ data }: { data: Product }) => {
           </Badge>
         )}
         <Zoom>
-          <img
+          <ImageCache
             src={selected}
             width={444}
-            height={530}
+            height={444}
             className="rounded-md"
             alt={data.title}
+            sizes="(max-width: 768px) 100vw, 444px"
           />
         </Zoom>
       </div>

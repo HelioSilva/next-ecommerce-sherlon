@@ -1,11 +1,10 @@
-import {
-  DESCRICAO_TAMANHO_PADRAO,
-  ROUTE_API_LOCAL,
-} from "@/const/constantes.utils";
+import { DESCRICAO_TAMANHO_PADRAO } from "@/const/constantes.utils";
 import { Product } from "@/types/product.types";
 import { ProdutoHiper } from "@/types/productHiper.types";
 import { ResponseDataAPI } from "@/types/responseDataAPI.types";
 import { converterUnidadeMedida, toCapitalCase } from "../utils";
+import { syncCategorias, syncProdutos } from "./syncProdutos";
+import { getCacheNovidades } from "../cache/produtos.kv";
 
 export const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
   id: prod.codigo,
@@ -22,136 +21,55 @@ export const convertHiperProductToProduct = (prod: ProdutoHiper): Product => ({
       : [DESCRICAO_TAMANHO_PADRAO],
   unitOfMeasure: converterUnidadeMedida(prod.unidade),
   categoria: prod.categoria || "",
+  marca: prod.marca || "",
 });
 
 export async function serviceGetCategories(): Promise<string[]> {
-  const res = await fetch("https://sherlonjoias.com.br/" + ROUTE_API_LOCAL, {
-    cache: "no-store",
-  });
+  const categorias = await syncCategorias();
 
-  if (!res.ok) return [];
-
-  const data = await res.json();
-
-  if (!data?.produtos) {
-    return [];
-  }
-
-  const cats: string[] = Array.from(
-    new Set(
-      data.produtos
-        .filter((prod: ProdutoHiper) => prod.quantidadeEmEstoque > 0)
-        .map((item: ProdutoHiper) => item.categoria)
-        .filter((cat: any): cat is string => !!cat && cat.trim() !== "")
-    )
-  );
-
-  return cats.sort((a: any, b: any) =>
-    a.localeCompare(b, "pt-BR", { sensitivity: "base" })
+  return categorias.sort((a: any, b: any) =>
+    a.localeCompare(b, "pt-BR", { sensitivity: "base" }),
   );
 }
 
-export async function serviceGetProducts({
-  category,
-  pesquisaProduto,
-}: {
-  category?: string;
-  pesquisaProduto?: string;
-}): Promise<ResponseDataAPI> {
-  const res = await fetch("https://sherlonjoias.com.br/" + ROUTE_API_LOCAL, {
-    cache: "no-store",
-  });
-
-  if (!res.ok)
-    return {
-      produtos: [],
-      maisVendidos: [],
-      novidades: [],
-      isLoading: false,
-      error: null,
-    };
-
-  const data = await res.json();
-
-  if (!data?.produtos) {
-    return {
-      produtos: [],
-      maisVendidos: [],
-      novidades: [],
-      isLoading: false,
-      error: null,
-    };
+export async function serviceGetProductsByCategory(
+  category: string,
+): Promise<Product[]> {
+  if (category == "Novidades") {
+    const novidades = await getCacheNovidades();
+    return novidades;
   }
 
-  if (category) {
-    if (category == "Novidades") {
-      return {
-        produtos: data.produtos
-          .filter((prod: ProdutoHiper) => prod.quantidadeEmEstoque > 0)
-          .sort((a: any, b: any) => b.codigo - a.codigo)
-          .slice(0, 24)
-          .map(convertHiperProductToProduct),
-        maisVendidos: [],
-        novidades: [],
-        isLoading: false,
-        error: null,
-      };
-    }
-    return {
-      produtos: data.produtos
-        .filter(
-          (prod: ProdutoHiper) =>
-            prod.quantidadeEmEstoque > 0 &&
-            prod.categoria
-              ?.toLowerCase()
-              .replace(/\s+/g, "-")
-              .includes(category)
-        )
-        .map(convertHiperProductToProduct),
-      maisVendidos: [],
-      novidades: [],
-      isLoading: false,
-      error: null,
-    };
-  }
+  const produtos = await syncProdutos();
+  return produtos.filter(
+    (prod) =>
+      prod.stock > 0 &&
+      prod.categoria?.toLowerCase().replace(/\s+/g, "-").includes(category),
+  );
+}
 
-  if (pesquisaProduto && pesquisaProduto.trim() != "") {
-    return {
-      produtos: data.produtos
-        .filter(
-          (prod: ProdutoHiper) =>
-            prod.quantidadeEmEstoque > 0 &&
-            (prod.nome?.toLowerCase().includes(pesquisaProduto.toLowerCase()) ||
-              prod.codigo == Number(pesquisaProduto))
-        )
-        .sort((a: any, b: any) => b.codigo - a.codigo)
-        .map(convertHiperProductToProduct),
-      maisVendidos: [],
-      novidades: [],
-      isLoading: false,
-      error: null,
-    };
-  }
+export async function serviceGetProductsBySlug(
+  slug: string,
+): Promise<Product | undefined> {
+  const produtos = await syncProdutos();
+  return produtos.find((product) => product.id === Number(slug));
+}
 
-  return {
-    produtos: data.produtos
-      .filter((prod: ProdutoHiper) => prod.quantidadeEmEstoque > 0)
-      .map(convertHiperProductToProduct),
-    novidades: data.produtos
-      .filter((prod: ProdutoHiper) => prod.quantidadeEmEstoque > 0)
-      .sort((a: any, b: any) => b.codigo - a.codigo)
-      .slice(0, 24)
-      .map(convertHiperProductToProduct),
-    maisVendidos: data?.produtos
-      ? data.produtos
-          .filter(
-            (prod: ProdutoHiper) =>
-              prod.marca == "SHERLON" && prod.quantidadeEmEstoque > 0
-          )
-          .map(convertHiperProductToProduct)
-          .slice(4, 24)
-      : [],
-    isLoading: false,
-    error: null,
-  };
+export async function serviceGetProductsByName(
+  name: string,
+): Promise<Product[]> {
+  const produtos = await syncProdutos();
+  return produtos
+    .filter(
+      (prod) =>
+        prod.stock > 0 &&
+        (prod.title?.toLowerCase().includes(name.toLowerCase()) ||
+          prod.id == Number(name)),
+    )
+    .sort((a: any, b: any) => b.codigo - a.codigo);
+}
+
+export async function serviceGetAllProducts(): Promise<Product[]> {
+  const produtos = await syncProdutos();
+  return produtos.sort((a: any, b: any) => b.codigo - a.codigo);
 }

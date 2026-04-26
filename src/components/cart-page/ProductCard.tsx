@@ -2,7 +2,6 @@
 
 import React from "react";
 import { PiTrashFill } from "react-icons/pi";
-import Image from "next/image";
 import Link from "next/link";
 import CartCounter from "@/components/ui/CartCounter";
 import { Button } from "../ui/button";
@@ -14,6 +13,7 @@ import {
 } from "@/lib/features/carts/cartsSlice";
 import { useAppDispatch } from "@/lib/hooks/redux";
 import { formatarPreco } from "@/lib/utils";
+import ImageCache from "../image/ImageCache";
 
 type ProductCardProps = {
   data: CartItem;
@@ -26,15 +26,18 @@ const ProductCard = ({ data }: ProductCardProps) => {
     <div className="flex items-start space-x-4">
       <Link
         href={`/shop/product/${data.id}/${data.name.split(" ").join("-")}`}
-        className="bg-[#F0EEED] rounded-lg w-full min-w-[100px] max-w-[100px] sm:max-w-[124px] aspect-square overflow-hidden"
+        className="bg-[#F0EEED] rounded-lg min-w-[100px] max-w-[100px] sm:max-w-[124px] aspect-square"
       >
-        <img
-          src={data.srcUrl}
-          width={124}
-          height={124}
-          className="rounded-md w-full h-full object-cover hover:scale-110 transition-all duration-500"
-          alt={data.name}
-        />
+        <div className="flex justify-center">
+          <ImageCache
+            src={data.srcUrl}
+            width={124}
+            height={124}
+            className="rounded-md object-contain"
+            alt={data.name}
+            sizes="(max-width: 768px) 100vw, 124px"
+          />
+        </div>
       </Link>
       <div className="flex w-full self-stretch flex-col">
         <div className="flex items-center justify-between">
@@ -54,7 +57,7 @@ const ProductCard = ({ data }: ProductCardProps) => {
                   id: data.id,
                   attributes: data.attributes,
                   quantity: data.quantity,
-                })
+                }),
               )
             }
           >
@@ -62,7 +65,9 @@ const ProductCard = ({ data }: ProductCardProps) => {
           </Button>
         </div>
         <div className="">
-          <span className="text-black font-bold text-base xl:text-lg">Tamanho: </span>
+          <span className="text-black font-bold text-base xl:text-lg">
+            {"Tamanho:"}
+          </span>
           <span className="text-black/60 font-bold text-base xl:text-lg">
             {data.attributes[0]}
           </span>
@@ -85,10 +90,13 @@ const ProductCard = ({ data }: ProductCardProps) => {
                       id: data.id,
                       attributes: data.attributes,
                       quantity: data.quantity,
-                    })
+                    }),
                   )
                 : dispatch(
-                    removeCartItem({ id: data.id, attributes: data.attributes })
+                    removeCartItem({
+                      id: data.id,
+                      attributes: data.attributes,
+                    }),
                   )
             }
             isZeroDelete

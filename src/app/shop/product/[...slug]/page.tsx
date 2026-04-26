@@ -3,19 +3,14 @@ import Header from "@/components/product-page/Header";
 import Tabs from "@/components/product-page/Tabs";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { serviceGetProducts } from "@/lib/services/products.service";
-import { ResponseDataAPI } from "@/types/responseDataAPI.types";
+import { serviceGetProductsBySlug } from "@/lib/services/products.service";
 
 export default async function ProductPage({
   params,
 }: {
   params: { slug: string[] };
 }) {
-  const data: ResponseDataAPI = await serviceGetProducts({});
-
-  const productData = data.produtos.find(
-    (product) => product.id === Number(params.slug[0])
-  );
+  const productData = await serviceGetProductsBySlug(params.slug[0]);
 
   return (
     <main>

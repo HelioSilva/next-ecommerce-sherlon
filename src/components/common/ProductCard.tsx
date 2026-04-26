@@ -5,6 +5,7 @@ import { formatarPreco } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { FiShoppingCart, FiStar } from "react-icons/fi";
+import ImageCache from "../image/ImageCache";
 
 interface ProductCardProps {
   data: Product;
@@ -30,13 +31,13 @@ export default function ProductCard({ data }: ProductCardProps) {
         className="cursor-pointer"
         aria-label={title}
       >
-        <div className="aspect-square overflow-hidden bg-gray-100">
-          <img
+        <div className="aspect-square bg-gray-100 flex items-center justify-center p-2">
+          <ImageCache
             src={srcUrl}
             alt={title}
             width={300}
             height={300}
-            className="rounded-md w-full h-full object-contain hover:scale-110 transition-all duration-500"
+            sizes="(max-width: 768px) 100vw, 300px"
           />
         </div>
         {hasDiscount && (

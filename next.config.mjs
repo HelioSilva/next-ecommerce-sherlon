@@ -1,13 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: "/api/produtos/:path*",
-        destination: "https://ms-ecommerce.hiper.com.br/api/v1/produtos/:path*",
-      },
-    ];
-  },
   images: {
     remotePatterns: [
       {

@@ -14,14 +14,18 @@ import { ProductNotFound } from "./ProductNotFound";
 export const ProductHomePage = ({
   data,
   txtPesquisa,
+  dataNovidades,
+  dataMaisVendido,
 }: {
-  data: ResponseDataAPI;
+  data: Product[];
   txtPesquisa?: string;
+  dataNovidades: Product[];
+  dataMaisVendido: Product[];
 }) => {
   const [produtos, setProdutos] = useState<Product[]>([]);
 
   useEffect(() => {
-    setProdutos(data.produtos);
+    setProdutos(data.slice(-200));
   }, [data]);
 
   return (
@@ -31,10 +35,10 @@ export const ProductHomePage = ({
       <main className="bg-[#FFF] text-[#685048] py-[50px] sm:py-[72px]">
         {!txtPesquisa && (
           <>
-            {data.novidades.length > 0 && (
+            {dataNovidades.length > 0 && (
               <ProductListSec
                 title="NOVIDADES"
-                data={data.novidades}
+                data={dataNovidades}
                 viewAllLink="/shop#novidades"
               />
             )}
@@ -42,10 +46,10 @@ export const ProductHomePage = ({
               <hr className="h-[1px] border-t-black/10 my-10 sm:my-16" />
             </div>
             <div className="mb-[50px] sm:mb-20">
-              {data.maisVendidos.length > 0 && (
+              {dataMaisVendido.length > 0 && (
                 <ProductListSec
                   title="Mais Vendidos"
-                  data={data.maisVendidos}
+                  data={dataMaisVendido}
                   viewAllLink="/shop?categoria=MaisVendidos"
                 />
               )}
@@ -53,11 +57,11 @@ export const ProductHomePage = ({
           </>
         )}
 
-        {data.produtos.length == 0 && <ProductNotFound />}
+        {data.length == 0 && <ProductNotFound />}
         <div className="mb-[50px] sm:mb-20">
           <div className="max-w-frame mx-auto px-4 xl:px-0">
             <div className="flex md:space-x-5 items-start">
-              {data.produtos.length > 0 && (
+              {data.length > 0 && (
                 <section className="max-w-frame mx-auto text-center">
                   <motion.h2
                     initial={{ y: "100px", opacity: 0 }}

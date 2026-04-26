@@ -23,7 +23,7 @@ export const ProductCategoryPage = ({
   data,
   nomeCategoria,
 }: {
-  data: ResponseDataAPI;
+  data: Product[];
   nomeCategoria: string;
 }) => {
   const { vlorMin, vlorMax, setResetFiltroPreco } = useBuscarPorDescricao();
@@ -32,7 +32,7 @@ export const ProductCategoryPage = ({
 
   useEffect(() => {
     setOrdenar("most-popular");
-    setProdutos(data.produtos);
+    setProdutos(data);
     setResetFiltroPreco(true);
   }, [data]);
 
@@ -53,9 +53,7 @@ export const ProductCategoryPage = ({
 
   useEffect(() => {
     setProdutos(
-      data.produtos.filter(
-        (prod) => prod.price > vlorMin && prod.price < vlorMax
-      )
+      data.filter((prod) => prod.price > vlorMin && prod.price < vlorMax),
     );
   }, [vlorMin, vlorMax]);
 
