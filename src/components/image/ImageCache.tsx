@@ -24,7 +24,7 @@ const ImageCache = ({
     <Image
       className={className}
       fill={fill}
-      alt=""
+      alt={alt}
       src={src}
       width={width}
       height={height}
