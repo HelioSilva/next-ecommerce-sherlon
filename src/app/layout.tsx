@@ -36,13 +36,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={satoshi.className}>
+      <body className={`${satoshi.className} min-h-screen flex flex-col`}>
         <BuscarProvider>
           <HolyLoader color="#868686" />
           {/* <TopBanner /> */}
           <Providers>
             <TopNavbar />
-            {children}
+            <main className="flex-1">{children}</main>
           </Providers>
           <Footer />
           <SpeedInsights />

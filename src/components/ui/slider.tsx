@@ -4,8 +4,9 @@ import * as React from "react";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import { cn, formatarPreco } from "@/lib/utils";
 
-interface SliderProps
-  extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> {
+interface SliderProps extends React.ComponentPropsWithoutRef<
+  typeof SliderPrimitive.Root
+> {
   min: number;
   max: number;
   step?: number;
@@ -20,7 +21,7 @@ const Slider = React.forwardRef<
 >(
   (
     { className, min, max, step = 1, value, onValueChange, label, ...props },
-    ref
+    ref,
   ) => {
     return (
       <div className="w-full relative">
@@ -28,7 +29,7 @@ const Slider = React.forwardRef<
           ref={ref}
           className={cn(
             "relative flex w-full touch-none select-none items-center",
-            className
+            className,
           )}
           min={min}
           max={max}
@@ -45,7 +46,7 @@ const Slider = React.forwardRef<
 
           {/* Label Thumb 1 */}
           <div
-            className="absolute -translate-x-1/2 -bottom-8 text-xs font-medium px-2 py-1 rounded z-10"
+            className="absolute -translate-x-1/2 -bottom-8 text-xs font-medium pl-8 px-2 py-1 rounded z-10"
             style={{
               left: `${((value[0] - min) / (max - min)) * 100}%`,
             }}
@@ -56,7 +57,7 @@ const Slider = React.forwardRef<
 
           {/* Label Thumb 2 */}
           <div
-            className="absolute -translate-x-1/2 -bottom-8 text-xs font-medium px-2 py-11 rounded z-10"
+            className="absolute -translate-x-1/2 -bottom-8 text-xs font-medium pr-10 px-2 py-11 rounded z-10"
             style={{
               left: `${((value[1] - min) / (max - min)) * 100}%`,
             }}
@@ -69,7 +70,7 @@ const Slider = React.forwardRef<
         <p>Valor mínimo: XX</p> */}
       </div>
     );
-  }
+  },
 );
 
 Slider.displayName = SliderPrimitive.Root.displayName;

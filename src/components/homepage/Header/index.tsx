@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <header className="bg-[#685048] pt-10  overflow-hidden">
       <div className=" md:max-w-frame mx-auto md:h-[100vh] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-        <section className=" banner-bg max-w-frame  md:flex flex-col  gap-12 px-4">
+        <section className=" banner-bg max-w-frame  md:flex flex-col  gap-12 px-4 2xl:gap-16">
           <motion.h2
             initial={{ y: "100px", opacity: 0, rotate: 10 }}
             whileInView={{ y: "0", opacity: 1, rotate: 0 }}
@@ -19,7 +19,7 @@ const Header = () => {
             transition={{ duration: 0.6 }}
             className={cn([
               "font-playfair",
-              "text-4xl text-[#e3d5ca] lg:text-[56px] lg:leading-[72px]",
+              "text-4xl text-[#e3d5ca] lg:text-[56px] lg:leading-[72px] 2xl:text-[72px] 2xl:leading-[92px]",
               "tracking-wide",
               "mb-8",
 
@@ -94,7 +94,7 @@ const Header = () => {
           whileInView={{ y: "-10", opacity: 1, rotate: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="relative min-h-[448px] md:min-h-[428px] bg-contain banner-bg bg-top bg-no-repeat bg-[url('/images/banner.png')]"
+          className="relative min-h-[448px] md:min-h-[428px] bg-contain 2xl:bg-cover  banner-bg bg-top bg-no-repeat bg-[url('/images/banner.png')]"
         ></motion.section>
       </div>
     </header>

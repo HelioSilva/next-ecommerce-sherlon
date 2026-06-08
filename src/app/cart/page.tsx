@@ -15,6 +15,8 @@ import { TbBasketExclamation } from "react-icons/tb";
 import React, { useEffect, useState } from "react";
 import { RootState } from "@/lib/store";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/redux";
+import { MdOutlineLocalOffer } from "react-icons/md";
+import InputGroup from "@/components/ui/input-group";
 import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,21 +27,61 @@ import { useBuscarPorDescricao } from "@/lib/hooks/useBuscarPorDescricao";
 export default function CartPage() {
   const dispatch = useAppDispatch();
   const { cart, totalPrice, adjustedTotalPrice } = useAppSelector(
-    (state: RootState) => state.carts
+    (state: RootState) => state.carts,
   );
 
   const { setResetFiltroBusca } = useBuscarPorDescricao();
   useEffect(() => {
-    console.log("carrinho");
     setResetFiltroBusca(true);
   }, []);
 
   // 👉 Estados do formulário
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
-  const [erros, setErros] = useState<{ nome?: string; cpf?: string }>({});
+  const [cupom, setCupom] = useState("");
+  const [desconto, setDesconto] = useState(0);
+  const [divCupom, setDivCupom] = useState(false);
+  const [nomeCupom, setNomeCupom] = useState("");
+  const [mensagemCupom, setMensagemCupom] = useState(false);
 
-  // Função de validação
+  const [erros, setErros] = useState<{
+    nome?: string;
+    cpf?: string;
+    cupom?: string;
+  }>({});
+
+  const aplicarCupom = async () => {
+    const response = await fetch("/api/cupons");
+
+    const data = await response.json();
+
+    const result = data.cupons.find(
+      (item: any) => item.cupom.toLowerCase() === cupom.toLowerCase(),
+    );
+    if (mensagemCupom) {
+      toast.error("Cupom já aplicado!");
+      setCupom("");
+      return;
+    }
+    if (result != undefined) {
+      setDesconto(result.desconto);
+      setDivCupom(true);
+      setNomeCupom(result.cupom);
+      setCupom("");
+      setMensagemCupom(true);
+      toast.success("Cupom aplicado com sucesso!");
+      return;
+    } else {
+      toast.error("Cupom inválido!");
+      setCupom("");
+      return;
+    }
+  };
+
+  const adjustedTotalPriceDesc = totalPrice - (totalPrice * desconto) / 100;
+
+  const descontoValor = (totalPrice * desconto) / 100;
+
   const validar = () => {
     const novosErros: typeof erros = {};
     if (!nome.trim()) novosErros.nome = "Obrigatório";
@@ -62,15 +104,29 @@ export default function CartPage() {
         );
       }) || [];
 
-    return (
-      `Olá, gostaria de fazer o pedido:\n\n` +
-      `Cliente:\n\n` +
-      `Nome | Razão Social: ${nome}\n` +
-      `CPF | CNPJ: ${cpf}\n\n` +
-      `Produtos:\n\n` +
-      items.join("\n") +
-      `\nTotal: ${formatarPreco(adjustedTotalPrice)}\n\n`
-    );
+    if (!mensagemCupom) {
+      return (
+        `Olá, gostaria de fazer o pedido:\n\n` +
+        `Cliente:\n\n` +
+        `Nome | Razão Social: ${nome}\n` +
+        `CPF | CNPJ: ${cpf}\n\n` +
+        `Produtos:\n\n` +
+        items.join("\n") +
+        `\nTotal: ${formatarPreco(adjustedTotalPrice)}\n\n`
+      );
+    } else {
+      return (
+        `Olá, gostaria de fazer o pedido:\n\n` +
+        `Cliente:\n\n` +
+        `Nome | Razão Social: ${nome}\n` +
+        `CPF | CNPJ: ${cpf}\n\n` +
+        `Produtos:\n\n` +
+        items.join("\n") +
+        `\nSubtotal: ${formatarPreco(adjustedTotalPrice)}\n\n` +
+        `Cupom de desconto (${nomeCupom}):  -${formatarPreco(descontoValor)}\n\n` +
+        `Total: ${formatarPreco(adjustedTotalPriceDesc)}\n\n`
+      );
+    }
   };
 
   const handlePedido = () => {
@@ -85,12 +141,12 @@ export default function CartPage() {
 
     window.location.href = enviarMensagemWhatsApp(
       process.env.NEXT_PUBLIC_NUM_WHATSAPP_RECEBE_PEDIDO || "",
-      mensagemTexto
+      mensagemTexto,
     );
   };
 
   return (
-    <main className="pb-20">
+    <main className="">
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -102,7 +158,7 @@ export default function CartPage() {
         theme="colored"
       />
 
-      <div className="max-w-frame mx-auto px-4 xl:px-0">
+      <div className="max-w-frame mx-auto px-4 xl:px-0 ">
         {cart && cart.items.length > 0 ? (
           <>
             <BreadcrumbCart />
@@ -153,7 +209,7 @@ export default function CartPage() {
                         "w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2",
                         erros.nome
                           ? "border-red-500 focus:ring-red-500"
-                          : "border-gray-300 focus:ring-[#685048]"
+                          : "border-gray-300 focus:ring-[#685048]",
                       )}
                     />
                     {erros.nome && (
@@ -179,7 +235,7 @@ export default function CartPage() {
                         "w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2",
                         erros.cpf
                           ? "border-red-500 focus:ring-red-500"
-                          : "border-gray-300 focus:ring-[#685048]"
+                          : "border-gray-300 focus:ring-[#685048]",
                       )}
                     />
                     {erros.cpf && (
@@ -209,6 +265,57 @@ export default function CartPage() {
                       {formatarPreco(Math.round(adjustedTotalPrice))}
                     </span>
                   </div>
+                  <div className="flex space-x-3">
+                    <InputGroup className="bg-[#F0F0F0]">
+                      <InputGroup.Text>
+                        <MdOutlineLocalOffer className="text-black/40 text-2xl" />
+                      </InputGroup.Text>
+                      <InputGroup.Input
+                        type="text"
+                        name="code"
+                        value={cupom}
+                        placeholder="Adicionar cupom de desconto"
+                        onChange={(e) => setCupom(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            aplicarCupom();
+                          }
+                        }}
+                        className="bg-transparent placeholder:text-black/40"
+                      />
+                    </InputGroup>
+
+                    <Button
+                      type="button"
+                      className="bg-black rounded-full  md:w-full max-w-[119px] h-[48px]"
+                      disabled={!cupom.trim()}
+                      onClick={() => aplicarCupom()}
+                    >
+                      Aplicar
+                    </Button>
+                  </div>
+
+                  {divCupom && (
+                    <>
+                      <div className="flex items-center justify-between ">
+                        <span className="md:text-xl text-green-500 ">
+                          {nomeCupom}
+                        </span>
+                        <span className="md:text-xl font-bold text-green-500 ">
+                          {"- R$ " + descontoValor.toFixed(2).replace(".", ",")}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="md:text-xl text-black/60">
+                          Subtotal
+                        </span>
+                        <span className="md:text-xl font-bold">
+                          {formatarPreco(adjustedTotalPriceDesc)}
+                        </span>
+                      </div>
+                    </>
+                  )}
+
                   <div className="text-justify text-black/60">
                     <p>
                       Para compras no atacado, oferecemos{" "}

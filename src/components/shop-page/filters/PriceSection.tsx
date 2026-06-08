@@ -21,7 +21,7 @@ const PriceSection = () => {
 
   useEffect(() => {
     if (resetFiltroPreco) {
-      setValor([0, 10000]);
+      setValor([0, 5000]);
       setResetFiltroPreco(false);
     }
   }, [resetFiltroPreco]);
@@ -34,9 +34,9 @@ const PriceSection = () => {
         </AccordionTrigger>
         <AccordionContent className="pt-4" contentClassName="overflow-visible">
           <Slider
-            defaultValue={[0, 10000]}
+            defaultValue={[0, 5000]}
             min={0}
-            max={10000}
+            max={5000}
             step={50}
             label="R$"
             color="#685048"

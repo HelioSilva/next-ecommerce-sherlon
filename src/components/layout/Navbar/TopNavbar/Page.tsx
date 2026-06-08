@@ -15,6 +15,8 @@ import CartBtn from "./CartBtn";
 import { ItemCategoria } from "@/types/itemCategories.types";
 import { useRouter } from "next/navigation";
 import { useBuscarPorDescricao } from "@/lib/hooks/useBuscarPorDescricao";
+import Modal from "@/components/modal/modal";
+import LoginForm from "@/components/login/loginForm";
 
 export const TopNavBarPage = ({
   categories,
@@ -47,6 +49,8 @@ export const TopNavBarPage = ({
     }
   }, [resetFiltroBusca]);
 
+  const [open, setOpen] = useState(false);
+
   return (
     <nav className=" sticky top-0 bg-white z-20">
       <div
@@ -59,8 +63,8 @@ export const TopNavBarPage = ({
         "
       >
         {/* Logo e menu mobile */}
-        <div className="flex items-center">
-          <div className="block md:hidden mr-3">
+        <div className="flex items-center ">
+          <div className="block md:hidden mr-3 ">
             <ResTopNavbar
               data={[
                 {
@@ -94,7 +98,7 @@ export const TopNavBarPage = ({
             <MenuItem label={"Novidades"} url={"/shop?categoria=Novidades"} />
           </NavigationMenuList>
         </NavigationMenu>
-        <div className="w-full justify-items-center mb-2 md:justify-items-start">
+        <div className="w-full mb-2 md:mb-0 grid justify-items-center  ">
           {/* InputGroup de busca - único, responsivo */}
           <InputGroup
             className="
@@ -128,6 +132,19 @@ export const TopNavBarPage = ({
         <div className="hidden sm:flex ">
           <CartBtn />
         </div>
+
+        <button className="hidden sm:flex " onClick={() => setOpen(true)}>
+          <img
+            src="/icons/user.svg"
+            height={50}
+            width={50}
+            alt="search"
+            className="max-w-[22px] max-h-[22px]"
+          ></img>
+        </button>
+        <Modal isOpen={open} onClose={() => setOpen(false)}>
+          <LoginForm onSuccess={() => setOpen(false)} />
+        </Modal>
       </div>
     </nav>
   );

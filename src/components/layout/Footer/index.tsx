@@ -48,15 +48,15 @@ const paymentBadgesData: PaymentBadge[] = [
 
 const Footer = () => {
   return (
-    <footer className="">
+    <footer className="mt-8">
       {/* <div className="relative">
         <div className="absolute bottom-0 w-full h-1/2 bg-[#F0F0F0]"></div>
         <div className="px-4">
           <NewsLetterSection />
         </div>
       </div> */}
-      <div className="pt-8 md:pt-[50px] bg-[#F0F0F0] px-4 pb-4">
-        <div className="max-w-frame mx-auto">
+      <div className=" pt-8 md:pt-[50px] bg-[#F0F0F0] px-4 pb-4">
+        <div className=" max-w-frame mx-auto">
           <nav className="lg:grid lg:grid-cols-12 mb-8">
             <div className="flex flex-col lg:col-span-3 lg:max-w-[248px]">
               <h1
@@ -69,7 +69,6 @@ const Footer = () => {
               </h1>
               <p className="text-black/60 text-sm mb-9">
                 Mais do que joias, criamos símbolos de beleza e significado.
-                
               </p>
               <div className="flex items-center">
                 {socialsData.map((social) => (
