@@ -75,28 +75,28 @@ export async function syncProdutos() {
     );
 
     // 3. Apenas novas (incremental puro)
-    const categoriasNovas = categoriasAPI.filter(
-      (cat) => !categoriasExistentes.has(cat),
-    );
+    // const categoriasNovas = categoriasAPI.filter(
+    //   (cat) => !categoriasExistentes.has(cat),
+    // );
 
     // Sincronização de produtos
-    const mapa = new Map(payloadProdutos.map((p: Product) => [p.id, p]));
+    // const mapa = new Map(payloadProdutos.map((p: Product) => [p.id, p]));
 
-    for (const prod of payloadProdutos || []) {
-      mapa.set(prod.id, prod);
-    }
+    // for (const prod of payloadProdutos || []) {
+    //   mapa.set(prod.id, prod);
+    // }
 
-    const novosProdutos = Array.from(mapa.values());
-    const novidades = novosProdutos.slice(-40);
-    const maisvendidos = novosProdutos.filter(
+    // const novosProdutos = Array.from(mapa.values());
+    const novidades = payloadProdutos.slice(-40);
+    const maisvendidos = payloadProdutos.filter(
       (item) => item.marca == "SHERLON" && item.stock > 0,
     );
 
     // Atualiza o cache local e o timestamp no Redis
     await saveCache(
-      novosProdutos,
+      payloadProdutos,
       data.pontoDeSincronizacao,
-      categoriasNovas,
+      categoriasAPI,
       maisvendidos,
       novidades,
     );
@@ -104,7 +104,7 @@ export async function syncProdutos() {
     // Atualiza o lastSync no Redis para controlar o próximo intervalo
     await redis.set("lastSync", Date.now());
 
-    return novosProdutos;
+    return payloadProdutos;
   } catch (error) {
     console.error("Erro na sincronização:", error);
     return produtos;
